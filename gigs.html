@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Previous Gigs — Tank!</title>
+<meta name="description" content="Where the jazz combo Tank! has played — a running list of previous gigs.">
+<meta property="og:title" content="Previous Gigs — Tank!">
+<meta property="og:description" content="Where the jazz combo Tank! has played.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="index.html">Tank<span>!</span></a>
+  <nav>
+    <a href="index.html#about">About</a>
+    <a href="index.html#band">The Band</a>
+    <a href="gigs.html" aria-current="page">Previous Gigs</a>
+    <a href="index.html#booking">Booking</a>
+  </nav>
+</header>
+
+<main class="gigs-page">
+
+  <a class="back-link" href="index.html">&larr; Back home</a>
+
+  <div class="section-head">
+    <span class="rule"></span>
+    <h1>Previous Gigs</h1>
+  </div>
+
+  <p class="lead">Every room we've played, most recent first.</p>
+
+  <ul class="gig-list" id="gig-list"></ul>
+
+  <noscript>
+    <p class="gig-empty">The gig list needs JavaScript to display. Email
+    <a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a> and we'll
+    send you our history.</p>
+  </noscript>
+
+  <div class="gigs-cta">
+    <p>Want us in your room next?</p>
+    <a class="btn btn-primary" href="index.html#booking">Book the band</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">Tank<span>!</span></p>
+  <p><a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a></p>
+</footer>
+
+<script src="gigs.js"></script>
+<script>renderGigs("gig-list");</script>
+
+</body>
+</html>

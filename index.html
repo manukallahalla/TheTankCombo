@@ -21,6 +21,7 @@
   <nav>
     <a href="#about">About</a>
     <a href="#band">The Band</a>
+    <a href="gigs.html">Previous Gigs</a>
     <a href="#booking">Booking</a>
   </nav>
 </header>
@@ -112,6 +113,18 @@
     </ul>
   </section>
 
+  <section id="gigs" class="gigs-teaser">
+    <div class="section-head">
+      <span class="rule"></span>
+      <h2>Previous Gigs</h2>
+    </div>
+    <ul class="gig-list gig-list-teaser" id="gig-teaser"></ul>
+    <noscript>
+      <p class="gig-empty">Turn on JavaScript to see recent shows, or view the full list.</p>
+    </noscript>
+    <a class="btn btn-ghost" href="gigs.html">See all gigs &rarr;</a>
+  </section>
+
   <section id="booking" class="booking">
     <div class="booking-inner">
       <div class="section-head">
@@ -133,6 +146,9 @@
   <p class="footer-mark">Tank<span>!</span></p>
   <p><a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a></p>
 </footer>
+
+<script src="gigs.js"></script>
+<script>renderGigs("gig-teaser", 3);</script>
 
 </body>
 </html>
