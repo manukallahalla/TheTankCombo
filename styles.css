@@ -252,20 +252,46 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
+.roster li { display: flex; }
+
 .member {
+  display: block;
+  flex: 1;
   padding: 1.9rem 1.4rem;
   background: var(--panel);
   border: 1px solid var(--line);
   border-top: 3px solid var(--brass);
   text-align: center;
+  text-decoration: none;
+  color: inherit;
   transition: transform 0.2s, border-color 0.2s, background 0.2s;
 }
 
-.member:hover {
+.member:hover,
+.member:focus-visible {
   transform: translateY(-4px);
   border-top-color: var(--ember);
   background: #1c212d;
 }
+
+.member:focus-visible {
+  outline: 2px solid var(--brass-hot);
+  outline-offset: 3px;
+}
+
+.member-more {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+
+.member:hover .member-more,
+.member:focus-visible .member-more { color: var(--brass-hot); }
 
 .member-mark {
   display: block;
@@ -338,6 +364,101 @@ section {
 }
 
 .footer-mark span { color: var(--ember); }
+
+/* ---------- member bio pages ---------- */
+
+.bio-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem) clamp(3rem, 8vw, 5rem);
+  min-height: 60vh;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--brass-hot); }
+
+.bio-head {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+}
+
+.bio-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  font-size: 2.4rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brass);
+}
+
+.bio-head h1 {
+  font-family: var(--display);
+  font-size: clamp(2.75rem, 9vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.35rem;
+}
+
+.bio-head .instrument { font-size: 0.85rem; }
+
+.bio-body p { margin: 0 0 1.1rem; }
+
+.bio-body .bio-todo { color: var(--text-dim); }
+
+.bio-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 3.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.bio-nav a {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.bio-nav a:hover { color: var(--brass-hot); }
+
+.bio-nav-next { text-align: right; }
+
+.bio-nav a span {
+  display: block;
+  font-family: var(--body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+@media (max-width: 420px) {
+  .bio-head { flex-direction: column; align-items: flex-start; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
