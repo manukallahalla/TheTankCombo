@@ -365,6 +365,13 @@ section {
 
 .footer-mark span { color: var(--ember); }
 
+/* Full-width third line, so the wordmark and email keep their own row. */
+.footer-fine {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
 /* ---------- gigs ---------- */
 
 .gigs-teaser {

@@ -62,7 +62,7 @@ function gigItem(gig) {
 function emptyState() {
   const p = document.createElement("p");
   p.className = "gig-empty";
-  p.textContent = "Gig history is being put together — check back soon.";
+  p.textContent = "Nothing on the list yet. Check back later.";
   return p;
 }
 
