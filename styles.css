@@ -508,6 +508,12 @@ section {
   border-top: 3px solid var(--brass);
 }
 
+.bio-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .bio-head h1 {
   font-family: var(--display);
   font-size: clamp(2.75rem, 9vw, 4.5rem);
@@ -553,6 +559,42 @@ section {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-dim);
+}
+
+.bio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.bio-photo {
+  flex: none;
+  width: 100%;
+  max-width: 480px;
+}
+
+.bio-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 680px) {
+  .bio-content {
+    flex-direction: row;
+    gap: 3rem;
+    align-items: start;
+  }
+  
+  .bio-body {
+    flex: 1;
+  }
+  
+  .bio-photo {
+    flex: 0 0 320px;
+  }
 }
 
 @media (max-width: 420px) {
