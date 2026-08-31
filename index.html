@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tank! — Jazz Combo</title>
-<meta name="description" content="Tank! is a five-piece high school jazz combo in Palo Alto. Drums, piano, sax, bass trombone, trumpet. We play parties, receptions, markets and fundraisers.">
+<meta name="description" content="Tank! is a five-piece high school jazz combo in Palo Alto. Drums, piano, sax, bass trombone, trumpet. Available for parties, receptions, markets and fundraisers.">
 <meta property="og:title" content="Tank! — Jazz Combo">
 <meta property="og:description" content="A five-piece high school jazz combo in Palo Alto. Drums, piano, sax, bass trombone, trumpet.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎺</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -58,12 +58,12 @@
         standards, hard bop and soul-jazz.
       </p>
       <p>
-        We've played parties, receptions, farmers markets and fundraisers. If you have room
-        for five people and somewhere to plug in, we'll probably say yes.
+        We've played one gig so far, at Greenmeadow here in Palo Alto. We're after the
+        next one. If you have room for five people and somewhere to plug in, we'll
+        probably say yes.
       </p>
       <p class="fine">
-        We're students at Gunn, but Tank! is not a Gunn band. The school and the district
-        don't run us, sponsor us or endorse us.
+        We're students at Gunn, but Tank! is not a Gunn band.
       </p>
     </div>
   </section>
@@ -74,11 +74,29 @@
       <h2>The Band</h2>
     </div>
     <ul class="roster">
+      <!-- row 1: the front line -->
       <li>
-        <a class="member" href="manu.html">
-          <span class="member-mark" aria-hidden="true">🥁</span>
-          <h3>Manu</h3>
-          <p class="instrument">Drums</p>
+        <a class="member" href="jason.html">
+          <span class="member-mark" aria-hidden="true">🎷</span>
+          <h3>Jason</h3>
+          <p class="instrument">Saxophone</p>
+          <span class="member-more">Read bio &rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a class="member" href="glenn.html">
+          <span class="member-mark" aria-hidden="true">🎺</span>
+          <h3>Glenn</h3>
+          <p class="instrument">Trumpet</p>
+          <span class="member-more">Read bio &rarr;</span>
+        </a>
+      </li>
+      <!-- row 2: the rhythm section -->
+      <li>
+        <a class="member" href="neil.html">
+          <span class="member-mark" aria-hidden="true">🎵</span>
+          <h3>Neil</h3>
+          <p class="instrument">Bass Trombone</p>
           <span class="member-more">Read bio &rarr;</span>
         </a>
       </li>
@@ -91,26 +109,10 @@
         </a>
       </li>
       <li>
-        <a class="member" href="jason.html">
-          <span class="member-mark" aria-hidden="true">🎷</span>
-          <h3>Jason</h3>
-          <p class="instrument">Saxophone</p>
-          <span class="member-more">Read bio &rarr;</span>
-        </a>
-      </li>
-      <li>
-        <a class="member" href="neil.html">
-          <span class="member-mark" aria-hidden="true">🎵</span>
-          <h3>Neil</h3>
-          <p class="instrument">Bass Trombone</p>
-          <span class="member-more">Read bio &rarr;</span>
-        </a>
-      </li>
-      <li>
-        <a class="member" href="glenn.html">
-          <span class="member-mark" aria-hidden="true">🎺</span>
-          <h3>Glenn</h3>
-          <p class="instrument">Trumpet</p>
+        <a class="member" href="manu.html">
+          <span class="member-mark" aria-hidden="true">🥁</span>
+          <h3>Manu</h3>
+          <p class="instrument">Drums</p>
           <span class="member-more">Read bio &rarr;</span>
         </a>
       </li>
@@ -148,12 +150,16 @@
 
 <footer class="site-footer">
   <p class="footer-mark">Tank<span>!</span></p>
-  <p><a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a></p>
+  <div class="footer-contact">
+    <a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a>
+    <a href="tel:+16503347667">650-334-7667</a>
+  </div>
   <p class="footer-fine">A high school band out of Palo Alto. We go to Gunn, but Gunn has nothing to do with this band.</p>
 </footer>
 
 <script src="gigs.js"></script>
 <script>renderGigs("gig-teaser", 3);</script>
+<script src="sfx.js"></script>
 
 </body>
 </html>

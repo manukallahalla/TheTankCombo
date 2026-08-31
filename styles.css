@@ -1,33 +1,198 @@
+/* =========================================================================
+   Tank! — stylesheet
+   Design system and rationale live in DESIGN.md. Read that before changing
+   colour, type, spacing or motion so the site stays consistent.
+
+   Palette: sophisticated jazz — an album-sleeve cream page, deep ink-blue text,
+   a burnt-orange primary accent for anything that carries a letter, deep teal
+   as the secondary (the "!" and the background glow). Light identity. All colour
+   flows from the semantic tokens in :root — never hard-code a hex in a
+   component rule.
+
+   NOTE: the "gigs" block is owned by whoever is building Previous Gigs.
+   It is reproduced here unchanged and only picks up the palette through
+   the back-compat aliases (--panel, --line, --brass, --text-dim, --display).
+   ========================================================================= */
+
 :root {
-  --ink:        #0b0d12;
-  --ink-soft:   #12151d;
-  --panel:      #171b25;
-  --line:       #2a3040;
-  --text:       #e8e6e1;
-  --text-dim:   #a3a29e;
-  --brass:      #d8a24a;
-  --brass-hot:  #f0c274;
-  --ember:      #c2452d;
-  --display: 'Bebas Neue', 'Haettenschweiler', 'Impact', sans-serif;
+  /* ---- surfaces ----
+     One textured album-cream page (body::before); each section is a frosted
+     glass panel floating on it. No per-section background tints. Warm paper,
+     not brown — sophisticated jazz, at the band's request. */
+  --canvas:          #f0ead9;   /* the whole page — warm album-sleeve cream */
+  --surface:         #faf5ea;   /* the tint inside cards, panels, raised UI */
+
+  /* ---- text ---- */
+  --ink:             #23262f;   /* primary text — deep ink blue-black */
+  --ink-soft:        #5b5d63;   /* secondary text — passes AA on cream and panels */
+
+  /* ---- brand: cream + burnt orange + teal ----
+     Primary accent is burnt orange — anything that carries a letter. Deep teal
+     is the secondary: the "!" and the background glow only, never body text. */
+  --accent:          #a8431f;   /* links, labels, the heading rule, primary action, focus */
+  --accent-bright:   #e0996a;   /* light burnt-orange — only readable on the dark footer */
+  --accent-wash:     #f4e6dc;   /* pale peach — selection, ghost-button hover bed */
+  --flame:           #2a5f59;   /* deep teal — the "!" and the hero glow, never small text */
+
+  /* ---- lines ---- */
+  --line:            #ded3bd;   /* hairline separators */
+  --border-strong:   #c3b393;   /* visible edges, control borders */
+
+  /* ---- roles ---- */
+  --link:            #a8431f;
+  --link-hover:      #843215;
+  --action-bg:       #a8431f;
+  --action-fg:       #f7f3e8;
+  --action-bg-hover: #843215;
+  --focus:           #a8431f;
+
+  /* footer — a deep-ink slab under the cream page, the one dark surface */
+  --footer-bg:        #23262f;
+  --footer-fg:        #cbc6b8;
+  --footer-fg-strong: #f7f3e8;
+
+  /* ---- semantic (kept for consistency; site barely uses them) ---- */
+  --ok:      #2f6a4f;
+  --warn:    #8a5a16;
+  --danger:  #a23b32;
+  --info:    var(--accent);
+
+  /* ---- back-compat aliases (do not remove — the gigs block reads these) ---- */
+  --panel:      var(--surface);
+  --text:       var(--ink);
+  --text-dim:   var(--ink-soft);
+  --brass:      var(--accent);
+  --brass-hot:  var(--accent-bright);
+  --ember:      var(--flame);
+
+  /* ---- type ----
+     Display: Bricolage Grotesque (700/800) — wordmark, headings, titles.
+     Body: Inter (SF Pro on Apple devices). Both need their Google Fonts <link>
+     in every page <head>. Member-card names use --body via a component rule. */
+  --display: 'Bricolage Grotesque', 'Archivo', 'Inter Tight', -apple-system, 'Segoe UI', sans-serif;
   --body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --wrap: 1080px;
+
+  /* ---- shape ---- */
+  --radius:      6px;
+  --radius-lg:   18px;   /* the frosted section panels */
+  --radius-pill: 999px;
+
+  /* ---- depth (offset + soft blur, warm brown-grey tint so shadows sit on the
+     cream instead of greying it) ---- */
+  --shadow-sm: 0 1px 2px rgba(46, 38, 24, 0.07), 0 2px 6px rgba(46, 38, 24, 0.05);
+  --shadow-md: 0 4px 14px rgba(46, 38, 24, 0.09), 0 14px 34px rgba(46, 38, 24, 0.10);
+  --shadow-lg: 0 10px 28px rgba(46, 38, 24, 0.12), 0 28px 64px rgba(46, 38, 24, 0.14);
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-fast: 130ms;
+  --dur:      200ms;
+
+  /* ---- metrics ---- */
+  --wrap: 1120px;
+  --measure: 66ch;
+  --header-h: 4.5rem;
+
+  color-scheme: light;
 }
+
+/* Single light identity — cream + teal + rust. No dark-mode remap (see DESIGN.md). */
+
+/* ---------- reset / base ---------- */
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  caret-color: var(--accent);
+  accent-color: var(--accent);
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+/* Default scale is pulled in slightly — the whole page renders as if the
+   browser were at 90% zoom, so a little more of the textured page shows around
+   the content on wide screens. The fixed texture layer still fills the real
+   viewport. */
+:root { zoom: 0.9; }
 
 body {
   margin: 0;
-  background: var(--ink);
-  color: var(--text);
+  background: var(--canvas);
+  color: var(--ink);
   font-family: var(--body);
   font-size: 17px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-a { color: var(--brass); }
+img { max-width: 100%; height: auto; }
+
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.15em;
+  transition: color var(--dur) ease;
+}
+a:hover { color: var(--link-hover); }
+
+::selection { background: var(--accent-wash); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Anchor targets clear the sticky header when reached from the nav. */
+:target { scroll-margin-top: calc(var(--header-h) + 1rem); }
+main[id], main > section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--canvas);
+}
+
+/* ---------- page texture ----------
+   A flat cream fill reads as blank paper. A single fixed layer under all content
+   gives the page a material for the frosted panels to refract — all static:
+     · grain — a tiled fractalNoise in deep ink at low alpha, so the cream has
+       the tooth of a printed sleeve
+     · warm top-light — a wide --accent (burnt orange) radial at the top of the page
+     · stage glows — three soft blobs off-centre, orange and teal; fixed, so as a
+       panel scrolls over one the blur drags the colour around behind the glass
+     · comb — --ink verticals, 2px every 24px: the "straight lines down" the band
+       liked, faint on the cream, a soft shimmer through a panel's blur
+   The panels sit above this (z-index on main / footer) and blur it; between
+   panels it shows sharp. See DESIGN.md → "Page texture". */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='g'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0%200%200%200%200.14%200%200%200%200%200.15%200%200%200%200%200.18%200%200%200%201%200'/%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type='linear'%20slope='0.1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect%20width='140'%20height='140'%20filter='url(%23g)'/%3E%3C/svg%3E") repeat top left / 140px 140px,
+    radial-gradient(150% 70% at 50% -10%,
+      color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%),
+    radial-gradient(48% 40% at 14% 20%,
+      color-mix(in srgb, var(--flame) 8%, transparent), transparent 72%),
+    radial-gradient(52% 44% at 88% 58%,
+      color-mix(in srgb, var(--accent) 8%, transparent), transparent 72%),
+    radial-gradient(44% 38% at 26% 96%,
+      color-mix(in srgb, var(--flame) 6%, transparent), transparent 72%),
+    repeating-linear-gradient(90deg,
+      color-mix(in srgb, var(--ink) 7%, transparent) 0 2px,
+      transparent 2px 24px);
+}
+
+main,
+.site-footer { position: relative; z-index: 1; }
 
 /* ---------- header ---------- */
 
@@ -39,54 +204,75 @@ a { color: var(--brass); }
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 0.9rem clamp(1.25rem, 5vw, 3rem);
-  background: rgba(11, 13, 18, 0.82);
-  backdrop-filter: blur(10px);
+  min-height: var(--header-h);
+  padding: 0.7rem clamp(1.25rem, 5vw, 3rem);
+  background: var(--canvas);
+  background: color-mix(in srgb, var(--canvas) 82%, transparent);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   border-bottom: 1px solid var(--line);
 }
 
 .wordmark {
   font-family: var(--display);
-  font-size: 1.9rem;
-  letter-spacing: 0.06em;
-  color: var(--text);
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
   text-decoration: none;
 }
 
-.wordmark span { color: var(--ember); }
+.wordmark span { color: var(--flame); }
 
 .site-header nav {
   display: flex;
-  gap: clamp(1rem, 3vw, 2.25rem);
+  align-items: center;
+  gap: clamp(0.9rem, 3vw, 2rem);
 }
 
 .site-header nav a {
-  color: var(--text-dim);
+  color: var(--ink-soft);
   text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 0.82rem;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding-bottom: 2px;
+  padding-bottom: 3px;
   border-bottom: 1px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color var(--dur) ease, border-color var(--dur) ease;
 }
 
-.site-header nav a:hover {
-  color: var(--brass-hot);
-  border-bottom-color: var(--brass);
+.site-header nav a:hover { color: var(--ink); border-bottom-color: var(--border-strong); }
+
+.site-header nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
 }
+
+/* The booking link is the money action — promote it to a filled pill on
+   every page, with no markup change, via its href. */
+.site-header nav a[href$="#booking"] {
+  padding: 0.5rem 1.05rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--action-bg);
+  color: var(--action-fg);
+  transition: background-color var(--dur) ease, transform var(--dur-fast) var(--ease-out);
+}
+.site-header nav a[href$="#booking"]:hover {
+  background: var(--action-bg-hover);
+  border-color: transparent;
+  color: var(--action-fg);
+}
+.site-header nav a[href$="#booking"]:active { transform: scale(0.97); }
 
 /* ---------- hero ---------- */
 
 .hero {
   position: relative;
   overflow: hidden;
-  padding: clamp(4.5rem, 13vw, 9rem) clamp(1.25rem, 5vw, 3rem) clamp(5rem, 12vw, 8rem);
-  background:
-    radial-gradient(120% 90% at 15% 0%, rgba(216, 162, 74, 0.16), transparent 60%),
-    radial-gradient(90% 80% at 90% 100%, rgba(194, 69, 45, 0.18), transparent 62%),
-    var(--ink);
+  /* sizing, blur and the surface tint come from the .section-panel group
+     below; the hero adds its own warm stage-light over that tint */
 }
 
 .hero-inner {
@@ -97,33 +283,31 @@ a { color: var(--brass); }
 }
 
 .eyebrow {
-  margin: 0 0 0.75rem;
-  font-size: 0.8rem;
+  margin: 0 0 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--accent);
 }
 
 .hero h1 {
   font-family: var(--display);
-  font-size: clamp(5.5rem, 22vw, 15rem);
-  line-height: 0.82;
-  letter-spacing: 0.02em;
-  margin: 0 0 1.25rem;
-  background: linear-gradient(170deg, #fff 10%, var(--brass-hot) 55%, var(--brass) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-weight: 800;
+  font-size: clamp(3.75rem, 14vw, 8.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.35rem;
+  color: var(--ink);
 }
 
-.hero h1 .bang { -webkit-text-fill-color: var(--ember); color: var(--ember); }
+.hero h1 .bang { color: var(--flame); }
 
 .tagline {
-  max-width: 40ch;
+  max-width: 42ch;
   margin: 0 0 2.25rem;
   font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-  color: var(--text-dim);
+  color: var(--ink-soft);
 }
 
 .cta-row {
@@ -132,200 +316,281 @@ a { color: var(--brass); }
   gap: 0.85rem;
 }
 
-/* piano-key strip along the bottom of the hero */
-.hero-keys {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 12px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--text) 0 22px,
-    var(--ink-soft) 22px 26px,
-    var(--text) 26px 30px,
-    var(--ink) 30px 36px
-  );
-  opacity: 0.28;
+/* --- the one authored motion moment: the hero settles in on load --- */
+@keyframes tank-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
 }
+.hero .eyebrow  { animation: tank-rise 460ms var(--ease-out) both; }
+.hero h1        { animation: tank-rise 560ms var(--ease-out) 60ms both; }
+.hero .tagline  { animation: tank-rise 520ms var(--ease-out) 140ms both; }
+.hero .cta-row  { animation: tank-rise 520ms var(--ease-out) 220ms both; }
 
 /* ---------- buttons ---------- */
 
 .btn {
-  display: inline-block;
-  padding: 0.8rem 1.6rem;
-  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font: inherit;
   font-weight: 700;
   font-size: 0.85rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: transform 0.15s, background 0.2s, color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out),
+              background-color var(--dur) ease,
+              border-color var(--dur) ease,
+              color var(--dur) ease,
+              box-shadow var(--dur) ease;
 }
 
-.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: scale(0.98); }
 
 .btn-primary {
-  background: var(--brass);
-  color: var(--ink);
+  background: var(--action-bg);
+  color: var(--action-fg);
+  box-shadow: var(--shadow-sm);
 }
-
-.btn-primary:hover { background: var(--brass-hot); }
+.btn-primary:hover { background: var(--action-bg-hover); color: var(--action-fg); }
 
 .btn-ghost {
-  border: 1px solid var(--line);
-  color: var(--text);
+  border-color: var(--border-strong);
+  color: var(--ink);
+  background: transparent;
 }
-
 .btn-ghost:hover {
-  border-color: var(--brass);
-  color: var(--brass-hot);
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--ink);
 }
 
 .btn-lg {
   padding: 1rem 2.1rem;
   font-size: 0.95rem;
   text-transform: none;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .btn:active { transform: translateY(0) scale(0.98); }
 }
 
 /* ---------- section furniture ---------- */
 
 section {
-  padding: clamp(3.5rem, 9vw, 6.5rem) clamp(1.25rem, 5vw, 3rem);
+  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem);
 }
 
 .section-head {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 2.25rem;
+  max-width: var(--wrap);
+  margin: 0 auto 2.75rem;
 }
 
 .section-head h2 {
   font-family: var(--display);
-  font-size: clamp(2rem, 5vw, 3rem);
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  letter-spacing: -0.015em;
+  color: var(--ink);
   margin: 0;
 }
 
+/* small orange accent bar beside every section heading */
 .rule {
-  width: 48px;
+  flex: none;
+  width: clamp(38px, 6vw, 54px);
   height: 3px;
-  background: var(--ember);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
 }
 
+/* ---------- frosted section panels ----------
+   The page background is a textured cream field (body::before: ink grain, a
+   teal top-light, teal/rust stage glows, a faint comb). Each section is a pane
+   of frosted glass floating on it: a translucent surface tint + a real backdrop
+   blur that refracts what scrolls behind, a bright inner top edge, a soft drop
+   shadow. This IS the section grouping — there are no divider strips. Opaque
+   children (member cards, buttons) read as figure on the glass. Solid fallback
+   under prefers-reduced-transparency. */
+.hero,
+.about,
+.band,
+.booking,
+#gigs {
+  max-width: var(--wrap);
+  margin: clamp(1.25rem, 3.5vw, 2.5rem) auto;
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  box-shadow:
+    var(--shadow-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* the hero adds its warm stage-light over the shared tint, and tucks up
+   under the sticky header */
+.hero {
+  margin-top: clamp(0.75rem, 2vw, 1.5rem);
+  padding-block: clamp(3rem, 8vw, 5.5rem);
+  background:
+    radial-gradient(120% 95% at 12% -20%, color-mix(in srgb, var(--flame) 13%, transparent), transparent 55%),
+    radial-gradient(95% 90% at 96% 115%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 60%),
+    color-mix(in srgb, var(--surface) 72%, transparent);
+}
+
+/* booking matches the Previous Gigs pane width (both --wrap); the ask stays
+   focused via the narrower .booking-inner content column, not a smaller pane */
+
 .lead {
-  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
-  color: var(--text);
+  font-size: clamp(1.1rem, 2.1vw, 1.3rem);
+  color: var(--ink);
+}
+
+.fine {
+  margin: 1.5rem 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
 }
 
 /* ---------- about ---------- */
 
-.about { background: var(--ink-soft); }
-
+/* heading and copy share the wrap's left edge; paragraphs hold a readable measure */
 .about-grid {
   max-width: var(--wrap);
   margin: 0 auto;
-  display: grid;
-  gap: 1.4rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-.about-grid .lead { grid-column: 1 / -1; }
+.about-grid > * { max-width: var(--measure); }
 
-.about-grid p:not(.lead) { color: var(--text-dim); margin: 0; }
+.about-grid .lead { margin: 0 0 0.25rem; }
 
-.about .section-head { max-width: var(--wrap); margin-inline: auto; margin-bottom: 2.25rem; }
+.about-grid p:not(.lead) { color: var(--ink-soft); margin: 0; }
+
+/* the "not a Gunn band" disclaimer sits below a divider, clearly secondary */
+.about-grid .fine {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-strong);
+  font-size: 0.85rem;
+}
 
 /* ---------- band ---------- */
 
-.band .section-head { max-width: var(--wrap); margin-inline: auto; margin-bottom: 2.25rem; }
-
+/* Two rows: the front line (sax, trumpet) centred on row 1, the rhythm
+   section (bass trombone, piano, drums) filling row 2. A 6-column grid — every
+   card spans 2, and the two front-line cards are nudged in to centre. */
 .roster {
-  max-width: var(--wrap);
+  max-width: 760px;
   margin: 0 auto;
   padding: 0;
   list-style: none;
   display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
-.roster li { display: flex; }
+.roster li { display: flex; grid-column: span 2; }
+.roster li:nth-child(1) { grid-column: 2 / span 2; }
+.roster li:nth-child(2) { grid-column: 4 / span 2; }
+
+@media (max-width: 620px) {
+  .roster { grid-template-columns: 1fr; max-width: 340px; }
+  .roster li,
+  .roster li:nth-child(1),
+  .roster li:nth-child(2) { grid-column: 1 / -1; }
+}
 
 .member {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
-  padding: 1.9rem 1.4rem;
-  background: var(--panel);
+  padding: 2rem 1.4rem 1.55rem;
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-top: 3px solid var(--brass);
+  border-radius: var(--radius);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
   text-align: center;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s, border-color 0.2s, background 0.2s;
-}
-
-.member:hover,
-.member:focus-visible {
-  transform: translateY(-4px);
-  border-top-color: var(--ember);
-  background: #1c212d;
+  transition: transform var(--dur) var(--ease-out),
+              border-color var(--dur) ease,
+              box-shadow var(--dur) ease;
 }
 
 .member:focus-visible {
-  outline: 2px solid var(--brass-hot);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
-.member-more {
-  display: block;
-  margin-top: 0.9rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  transition: color 0.2s;
-}
-
-.member:hover .member-more,
-.member:focus-visible .member-more { color: var(--brass-hot); }
-
 .member-mark {
-  display: block;
-  font-size: 1.9rem;
-  margin-bottom: 0.6rem;
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.7rem;
 }
 
+/* the member cards read as plain UI, not display type — name, instrument and
+   "Read bio" all in the body font */
 .member h3 {
-  font-family: var(--display);
-  font-size: 1.85rem;
-  letter-spacing: 0.07em;
-  margin: 0 0 0.2rem;
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: -0.005em;
+  margin: 0 0 0.25rem;
+  color: var(--ink);
 }
 
 .instrument {
   margin: 0;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--accent);
+}
+
+/* persistent "this is a link" cue */
+.member-more {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--link);
+  transition: color var(--dur) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .member:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
+  .member:hover .member-more { color: var(--link-hover); }
 }
 
 /* ---------- booking ---------- */
 
-.booking {
-  background:
-    radial-gradient(80% 120% at 50% 0%, rgba(194, 69, 45, 0.16), transparent 65%),
-    var(--ink-soft);
-  border-top: 1px solid var(--line);
-}
-
 .booking-inner {
-  max-width: 720px;
+  max-width: 640px;
   margin: 0 auto;
   text-align: center;
 }
@@ -334,11 +599,7 @@ section {
 
 .booking .lead { margin-bottom: 2rem; }
 
-.fine {
-  margin: 1.5rem 0 0;
-  font-size: 0.9rem;
-  color: var(--text-dim);
-}
+.booking .btn-primary { box-shadow: var(--shadow-md); }
 
 /* ---------- footer ---------- */
 
@@ -347,32 +608,58 @@ section {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  padding: 2rem clamp(1.25rem, 5vw, 3rem);
+  gap: 1rem 0.75rem;
+  padding: 2.5rem clamp(1.25rem, 5vw, 3rem);
+  background: var(--footer-bg);
+  color: var(--footer-fg);
   border-top: 1px solid var(--line);
-  color: var(--text-dim);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
+
+.site-footer a { color: var(--footer-fg-strong); text-underline-offset: 0.2em; }
+.site-footer a:hover { color: var(--footer-fg-strong); text-decoration-thickness: 2px; }
 
 .site-footer p { margin: 0; }
 
-.footer-mark {
-  font-family: var(--display);
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
-  color: var(--text);
+/* email + phone — the reason the footer exists, so keep them prominent */
+.footer-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 1.5rem;
 }
 
-.footer-mark span { color: var(--ember); }
+.footer-contact a {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--accent-bright);   /* the deep --accent orange fails contrast on the ink footer; --accent-bright is the light-orange footer variant */
+  text-decoration: none;
+}
 
-/* Full-width third line, so the wordmark and email keep their own row. */
+.footer-contact a:hover {
+  color: var(--footer-fg-strong);
+  text-decoration: underline;
+}
+
+.footer-mark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.55rem;
+  letter-spacing: -0.01em;
+  color: var(--footer-fg-strong);
+}
+
+.footer-mark span { color: var(--accent-bright); }  /* light-orange footer variant — deep --accent fails contrast on the ink footer */
+
 .footer-fine {
   flex-basis: 100%;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   opacity: 0.75;
 }
 
-/* ---------- gigs ---------- */
+/* ---------- gigs ----------
+   Owned by the Previous Gigs work. Reproduced unchanged; picks up the new
+   palette through the aliases in :root. Don't restyle here — coordinate. */
 
 .gigs-teaser {
   max-width: var(--wrap);
@@ -480,41 +767,44 @@ section {
 
 .gigs-cta p { color: var(--text-dim); margin: 0 0 1rem; }
 
-.site-header nav a[aria-current="page"] {
-  color: var(--brass-hot);
-  border-bottom-color: var(--brass);
-}
-
 /* ---------- member bio pages ---------- */
 
 .bio-page {
   max-width: 760px;
-  margin: 0 auto;
-  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem) clamp(3rem, 8vw, 5rem);
-  min-height: 60vh;
+  margin: clamp(1.25rem, 3.5vw, 2.5rem) auto;
+  padding: clamp(2.25rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem) clamp(3rem, 7vw, 4rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  box-shadow:
+    var(--shadow-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  min-height: 40vh;
 }
 
 .back-link {
   display: inline-block;
   margin-bottom: 2.5rem;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--text-dim);
-  transition: color 0.2s;
+  color: var(--link);
+  transition: color var(--dur) ease;
 }
 
-.back-link:hover { color: var(--brass-hot); }
+.back-link:hover { color: var(--link-hover); }
 
 .bio-head {
   display: flex;
   align-items: center;
   gap: 1.25rem;
   padding-bottom: 1.75rem;
-  border-bottom: 1px solid var(--line);
   margin-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .bio-mark {
@@ -524,30 +814,33 @@ section {
   width: 84px;
   height: 84px;
   font-size: 2.4rem;
-  background: var(--panel);
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-top: 3px solid var(--brass);
+  border-radius: var(--radius);
 }
 
 .bio-mark img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: calc(var(--radius) - 1px);
 }
 
 .bio-head h1 {
   font-family: var(--display);
-  font-size: clamp(2.75rem, 9vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: 0.05em;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
   margin: 0 0 0.35rem;
+  color: var(--ink);
 }
 
-.bio-head .instrument { font-size: 0.85rem; }
+.bio-head .instrument { font-size: 0.82rem; }
 
+.bio-body { max-width: var(--measure); }
 .bio-body p { margin: 0 0 1.1rem; }
-
-.bio-body .bio-todo { color: var(--text-dim); }
+.bio-body .bio-todo { color: var(--ink-soft); }
 
 .bio-nav {
   display: flex;
@@ -561,14 +854,15 @@ section {
 
 .bio-nav a {
   font-family: var(--display);
-  font-size: 1.5rem;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
   text-decoration: none;
-  color: var(--text);
-  transition: color 0.2s;
+  color: var(--ink);
+  transition: color var(--dur) ease;
 }
 
-.bio-nav a:hover { color: var(--brass-hot); }
+.bio-nav a:hover { color: var(--link); }
 
 .bio-nav-next { text-align: right; }
 
@@ -577,9 +871,9 @@ section {
   font-family: var(--body);
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--ink-soft);
 }
 
 .bio-content {
@@ -597,27 +891,30 @@ section {
 .bio-photo img {
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--line);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-lg);
 }
 
-@media (min-width: 680px) {
+/* photo beside the bio only once the frosted pane is wide enough for both to
+   breathe (the pane's margins + padding eat into the old 680px threshold) */
+@media (min-width: 860px) {
   .bio-content {
     flex-direction: row;
     gap: 3rem;
     align-items: start;
   }
-  
+
   .bio-body {
     flex: 1;
   }
-  
+
   .bio-photo {
-    flex: 0 0 320px;
+    flex: 0 0 300px;
   }
 }
 
+<<<<<<< Updated upstream
 /* ---------- gallery page ---------- */
 
 .gallery-grid {
@@ -720,14 +1017,69 @@ section {
 
 .lightbox-close:hover {
   color: var(--brass-hot);
+=======
+/* ---------- responsive ---------- */
+
+@media (max-width: 620px) {
+  .site-header { gap: 0.85rem; }
+  .site-header nav { gap: 0.75rem; }
+  .site-header nav a { font-size: 0.76rem; letter-spacing: 0.08em; }
+  .site-header nav a[href$="#booking"] { padding: 0.45rem 0.8rem; }
+>>>>>>> Stashed changes
 }
 
 @media (max-width: 420px) {
   .bio-head { flex-direction: column; align-items: flex-start; }
 }
 
+/* ---------- user preferences ---------- */
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  * { transition: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .hero .eyebrow,
+  .hero h1,
+  .hero .tagline,
+  .hero .cta-row { opacity: 1; transform: none; }
   .btn:hover, .member:hover { transform: none; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-header {
+    background: var(--canvas);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hero, .about, .band, .booking, #gigs, .bio-page {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hero {
+    background:
+      radial-gradient(120% 95% at 12% -20%, color-mix(in srgb, var(--flame) 12%, transparent), transparent 55%),
+      var(--surface);
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --ink-soft: var(--ink);
+    --line: var(--border-strong);
+  }
+  .btn-ghost { border-color: var(--ink); }
+  .site-header nav a { color: var(--ink); }
+  .hero, .about, .band, .booking, #gigs, .bio-page {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: var(--border-strong);
+  }
+  /* the texture layer costs a sliver of contrast — drop it here */
+  body::before { display: none; }
 }
