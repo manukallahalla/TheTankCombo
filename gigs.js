@@ -9,7 +9,13 @@
  *     note: "Opening for the Ellis Quartet" },
  */
 const GIGS = [
-  // Add gigs here, newest or oldest — order does not matter, they get sorted.
+  {
+    date: "2026-05-25",
+    venue: "Greenmeadow Lawn",
+    city: "Palo Alto, CA",
+    note: "Memorial Day Celebration",
+    link: "greenmeadow.html"
+  }
 ];
 
 /* ---------- rendering ---------- */
@@ -55,6 +61,13 @@ function gigItem(gig) {
     note.className = "gig-note";
     note.textContent = gig.note;
     li.append(note);
+  }
+  if (gig.link) {
+    const link = document.createElement("a");
+    link.className = "gig-link";
+    link.href = gig.link;
+    link.textContent = "View photos & media →";
+    li.append(link);
   }
   return li;
 }

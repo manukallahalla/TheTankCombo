@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenmeadow Memorial Day Gig — Tank!</title>
+<meta name="description" content="Photos and media from Tank! Jazz Combo's Memorial Day 2026 gig at Greenmeadow.">
+<meta property="og:title" content="Greenmeadow Memorial Day Gig — Tank!">
+<meta property="og:description" content="Photos from our Memorial Day 2026 show.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="index.html">Tank<span>!</span></a>
+  <nav>
+    <a href="index.html#about">About</a>
+    <a href="index.html#band">The Band</a>
+    <a href="gigs.html">Previous Gigs</a>
+    <a href="index.html#booking">Booking</a>
+  </nav>
+</header>
+
+<main class="gigs-page gallery-page">
+
+  <a class="back-link" href="gigs.html">&larr; Back to all gigs</a>
+
+  <div class="section-head">
+    <span class="rule"></span>
+    <h1>Greenmeadow Gig</h1>
+  </div>
+
+  <p class="eyebrow" style="margin-top: -1rem; margin-bottom: 1.5rem;">Memorial Day · May 25, 2026</p>
+
+  <p class="lead">
+    We had an awesome time playing for the neighborhood community at Greenmeadow for their annual Memorial Day celebration. Here are some of the photos from the afternoon.
+  </p>
+
+  <div class="gallery-grid">
+    <!-- Left Column: Portrait Group Photo -->
+    <div class="gallery-column">
+      <div class="gallery-item">
+        <img src="greenmeadow_2.jpg" alt="Tank! Jazz Combo members posing at Greenmeadow">
+      </div>
+    </div>
+
+    <!-- Center Column: Gig Video -->
+    <div class="gallery-column">
+      <video class="gig-video" controls preload="metadata"
+             poster="greenmeadow-video-poster.jpg"
+             src="greenmeadow-video.mp4">
+        Your browser can’t play this video.
+        <a href="greenmeadow-video.mp4">Download it instead</a>.
+      </video>
+    </div>
+
+    <!-- Right Column: Landscape Performance Photos -->
+    <div class="gallery-column">
+      <div class="gallery-item">
+        <img src="greenmeadow_1.jpg" alt="Tank! Jazz Combo performing live at Greenmeadow">
+      </div>
+      <div class="gallery-item">
+        <img src="greenmeadow_3.jpg" alt="Tank! performing standard jazz outdoors">
+      </div>
+    </div>
+  </div>
+
+  <div class="gigs-cta">
+    <p>Want us to play at your next event?</p>
+    <a class="btn btn-primary" href="index.html#booking">Book the band</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">Tank<span>!</span></p>
+  <p><a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a></p>
+  <p class="footer-fine">A high school band out of Palo Alto. We go to Gunn, but Gunn has nothing to do with this band.</p>
+</footer>
+
+<!-- Lightbox Overlay -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+  <img class="lightbox-content" id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.querySelector(".lightbox-close");
+  const galleryImages = document.querySelectorAll(".gallery-item img");
+
+  galleryImages.forEach(img => {
+    img.addEventListener("click", () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.style.display = "flex";
+      setTimeout(() => {
+        lightbox.classList.add("active");
+      }, 10);
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("active");
+    setTimeout(() => {
+      lightbox.style.display = "none";
+    }, 250);
+    document.body.style.overflow = "";
+  };
+
+  closeBtn.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("active")) {
+      closeLightbox();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
