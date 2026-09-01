@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Previous Gigs — Tank!</title>
-<meta name="description" content="A running list of every gig the high school jazz combo Tank! has played.">
-<meta property="og:title" content="Previous Gigs — Tank!">
-<meta property="og:description" content="Where the jazz combo Tank! has played.">
+<title>Recordings — Tank!</title>
+<meta name="description" content="Listen to recordings from the high school jazz combo Tank!">
+<meta property="og:title" content="Recordings — Tank!">
+<meta property="og:description" content="Listen to the jazz combo Tank!">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎺</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,8 +21,8 @@
   <nav>
     <a href="index.html#about">About</a>
     <a href="index.html#band">The Band</a>
-    <a href="gigs.html" aria-current="page">Previous Gigs</a>
-    <a href="recordings.html">Recordings</a>
+    <a href="gigs.html">Previous Gigs</a>
+    <a href="recordings.html" aria-current="page">Recordings</a>
     <a href="index.html#booking">Booking</a>
   </nav>
 </header>
@@ -33,21 +33,33 @@
 
   <div class="section-head">
     <span class="rule"></span>
-    <h1>Previous Gigs</h1>
+    <h1>Recordings</h1>
   </div>
 
-  <p class="lead">Every gig we've played so far, newest first.</p>
+  <div class="page-intro">
+    <p class="lead">
+      These are practice recordings — rehearsals, run-throughs, the odd take that
+      surprised us. Newest first.
+    </p>
+    <p>
+      The interesting part of a young band isn't any single performance. It's the
+      distance between them. A tune turns up here stiff and over-thought, and a few
+      weeks later it breathes. Most groups only put out the take they're happiest
+      with. We'd rather leave the whole run standing, clams and all, and let the
+      improvement do the talking.
+    </p>
+  </div>
 
-  <ul class="gig-list" id="gig-list"></ul>
+  <ul class="recording-list" id="recording-list"></ul>
 
   <noscript>
-    <p class="gig-empty">This list needs JavaScript to load. If yours is off, email
+    <p class="recording-empty">This list needs JavaScript to load. If yours is off, email
     <a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a> and we'll
-    just send it to you.</p>
+    just send the tracks to you.</p>
   </noscript>
 
   <div class="gigs-cta">
-    <p>Want us at yours?</p>
+    <p>Want us at your next event?</p>
     <a class="btn btn-primary" href="index.html#booking">Book the band</a>
   </div>
 
@@ -62,8 +74,8 @@
   <p class="footer-fine">A high school band out of Palo Alto. We go to Gunn, but are not affiliated with it.</p>
 </footer>
 
-<script src="gigs.js"></script>
-<script>renderGigs("gig-list");</script>
+<script src="recordings.js"></script>
+<script>renderRecordings("recording-list");</script>
 <script src="sfx.js"></script>
 
 </body>

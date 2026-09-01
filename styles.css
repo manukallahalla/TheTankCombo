@@ -425,7 +425,8 @@ section {
 .about,
 .band,
 .booking,
-#gigs {
+#gigs,
+#recordings {
   max-width: var(--wrap);
   margin: clamp(1.25rem, 3.5vw, 2.5rem) auto;
   padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
@@ -466,10 +467,39 @@ section {
 
 /* ---------- about ---------- */
 
-/* heading and copy share the wrap's left edge; paragraphs hold a readable measure */
-.about-grid {
+/* copy beside the band photo — one column until there is room for two, and
+   the text column leads so it still reads first on a phone */
+.about-layout {
   max-width: var(--wrap);
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  align-items: start;
+}
+
+@media (min-width: 860px) {
+  .about-layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+}
+
+.about-photo {
+  margin: 0;
+}
+
+.about-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+}
+
+/* heading and copy share the wrap's left edge; paragraphs hold a readable measure */
+.about-grid {
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -785,6 +815,124 @@ section {
 }
 
 .gigs-cta p { color: var(--ink-soft); margin: 0 0 1rem; }
+
+/* intro prose on the interior pages — paragraphs hold a readable measure
+   rather than running the full width of the panel */
+.page-intro { margin-bottom: 2.25rem; }
+.page-intro > * { max-width: var(--measure); }
+.gigs-page .page-intro .lead { margin-bottom: 0.9rem; }
+
+/* the teaser blurb is centred with the rest of the section */
+.recordings-blurb {
+  max-width: var(--measure);
+  margin: -1.25rem auto 2.25rem;
+}
+
+/* ---------- recordings ----------
+   Same card language as .gig and .member: opaque surface on the frosted
+   panel, accent bar down the left, lift on hover. */
+
+.recordings-teaser {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.recordings-teaser .section-head { justify-content: center; }
+
+.recording-list {
+  list-style: none;
+  margin: 0 0 2.25rem;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.recording-list-teaser {
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+
+.recording {
+  padding: 1.4rem 1.3rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-align: left;
+  transition: transform var(--dur) var(--ease-out),
+              border-color var(--dur) ease,
+              box-shadow var(--dur) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .recording:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    border-left-color: var(--accent);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.recording-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 0.15rem;
+}
+
+.recording-meta {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.recording-note {
+  margin: 0.55rem 0 0;
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* native controls, nudged onto the cream palette */
+.recording-audio {
+  display: block;
+  width: 100%;
+  margin-top: 0.9rem;
+  border-radius: var(--radius-pill);
+  color-scheme: light;
+}
+
+.recording-audio:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* stands in for the player until a file is dropped in */
+.recording-pending {
+  margin: 0.9rem 0 0;
+  padding: 0.55rem 0.9rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.recording-empty {
+  margin: 0 0 2.25rem;
+  color: var(--ink-soft);
+}
 
 /* ---------- member bio pages ---------- */
 

@@ -22,6 +22,7 @@
     <a href="#about">About</a>
     <a href="#band">The Band</a>
     <a href="gigs.html">Previous Gigs</a>
+    <a href="recordings.html">Recordings</a>
     <a href="#booking">Booking</a>
   </nav>
 </header>
@@ -46,25 +47,32 @@
       <span class="rule"></span>
       <h2>About</h2>
     </div>
-    <div class="about-grid">
-      <p class="lead">
-        We all go to Gunn High School in Palo Alto. We
-        started it on our own and we run the whole thing ourselves.
-      </p>
-      <p>
-        Our front line is sax, trumpet and bass trombone. Bass trombone is a strange choice
-        for a group this small, but we needed a bass player. It gives us a lot more low end
-        than most quintets have. Piano and drums cover everything else. We mostly play
-        standards, hard bop and soul-jazz.
-      </p>
-      <p>
-        We've played one gig so far, at Greenmeadow here in Palo Alto. We're after the
-        next one. If you have room for five people and somewhere to plug in, we'll
-        probably say yes.
-      </p>
-      <p class="fine">
-        We're students at Gunn, but Tank! is not a Gunn band.
-      </p>
+    <div class="about-layout">
+      <div class="about-grid">
+        <p class="lead">
+          We all go to Gunn High School in Palo Alto. We
+          started it on our own and we run the whole thing ourselves.
+        </p>
+        <p>
+          Our front line is sax, trumpet and bass trombone. Bass trombone is a strange choice
+          for a group this small, but we needed a bass player. It gives us a lot more low end
+          than most quintets have. Piano and drums cover everything else. We mostly play
+          standards, hard bop and soul-jazz.
+        </p>
+        <p>
+          We've played one gig so far, at Greenmeadow here in Palo Alto. We're after the
+          next one. If you have room for five people and somewhere to plug in, we'll
+          probably say yes.
+        </p>
+        <p class="fine">
+          We're students at Gunn, but Tank! is not a Gunn band.
+        </p>
+      </div>
+
+      <figure class="about-photo">
+        <img src="band.jpg" width="1200" height="1600"
+             alt="The five members of Tank! standing with their instruments — drum sticks, bass trombone, saxophone, trumpet and keyboard — at the Greenmeadow gig.">
+      </figure>
     </div>
   </section>
 
@@ -131,6 +139,22 @@
     <a class="btn btn-ghost" href="gigs.html">See all gigs &rarr;</a>
   </section>
 
+  <section id="recordings" class="recordings-teaser">
+    <div class="section-head">
+      <span class="rule"></span>
+      <h2>Recordings</h2>
+    </div>
+    <p class="lead recordings-blurb">
+      Practice tapes, not records. We leave them all up so you can hear the band
+      getting better.
+    </p>
+    <ul class="recording-list recording-list-teaser" id="recording-teaser"></ul>
+    <noscript>
+      <p class="recording-empty">You need JavaScript on to hear our recordings.</p>
+    </noscript>
+    <a class="btn btn-ghost" href="recordings.html">Hear everything &rarr;</a>
+  </section>
+
   <section id="booking" class="booking">
     <div class="booking-inner">
       <div class="section-head">
@@ -139,7 +163,7 @@
       </div>
       <p class="lead">
         Send us the date, where it is and how long you want us playing. We'll write back
-        with a price and a list of what we need set up.
+        with a list of what we need set up.
       </p>
       <a class="btn btn-primary btn-lg" href="mailto:thetankcombo@gmail.com?subject=Booking%20inquiry%20for%20Tank!">thetankcombo@gmail.com</a>
       <p class="fine">We have school all week, so give us a day or two to answer.</p>
@@ -159,6 +183,8 @@
 
 <script src="gigs.js"></script>
 <script>renderGigs("gig-teaser", 3);</script>
+<script src="recordings.js"></script>
+<script>renderRecordings("recording-teaser", 3);</script>
 <script src="sfx.js"></script>
 
 </body>
