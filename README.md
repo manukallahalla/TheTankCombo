@@ -1,6 +1,6 @@
 # Tank!
 
-The website for the jazz combo **Tank!** — a five-piece playing standards, hard bop and soul-jazz.
+The website for the jazz combo **Tank!** — a five-piece playing a wide range of styles, from swing and bossa nova to hard bop, spooky music and video game classics.
 
 ## The band
 

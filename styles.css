@@ -8,10 +8,6 @@
    as the secondary (the "!" and the background glow). Light identity. All colour
    flows from the semantic tokens in :root — never hard-code a hex in a
    component rule.
-
-   NOTE: the "gigs" block is owned by whoever is building Previous Gigs.
-   It is reproduced here unchanged and only picks up the palette through
-   the back-compat aliases (--panel, --line, --brass, --text-dim, --display).
    ========================================================================= */
 
 :root {
@@ -56,14 +52,6 @@
   --warn:    #8a5a16;
   --danger:  #a23b32;
   --info:    var(--accent);
-
-  /* ---- back-compat aliases (do not remove — the gigs block reads these) ---- */
-  --panel:      var(--surface);
-  --text:       var(--ink);
-  --text-dim:   var(--ink-soft);
-  --brass:      var(--accent);
-  --brass-hot:  var(--accent-bright);
-  --ember:      var(--flame);
 
   /* ---- type ----
      Display: Bricolage Grotesque (700/800) — wordmark, headings, titles.
@@ -117,6 +105,10 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   background: var(--canvas);
   color: var(--ink);
   font-family: var(--body);
@@ -125,6 +117,11 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* the page always fills the viewport so the footer sits on the bottom edge
+   instead of floating mid-screen on a short page — the main column absorbs
+   whatever vertical slack is left over */
+main { flex: 1 0 auto; }
 
 img { max-width: 100%; height: auto; }
 
@@ -216,8 +213,13 @@ main,
 .wordmark {
   font-family: var(--display);
   font-weight: 800;
+  /* Bricolage Grotesque is a variable font with an optical-size axis; left on
+     auto, a 1.8rem wordmark renders in the flatter text cut while the hero gets
+     the expressive display cut. Pin it to a display optical size so the header
+     "Tank!" carries the same character as the rest of the display type. */
+  font-variation-settings: "wght" 800, "opsz" 44;
   font-size: 1.8rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: var(--ink);
   text-decoration: none;
 }
@@ -481,6 +483,8 @@ section {
 @media (min-width: 860px) {
   .about-layout {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    /* photo centres on the full text column, "About" heading included */
+    align-items: center;
   }
 }
 
@@ -507,17 +511,9 @@ section {
 
 .about-grid > * { max-width: var(--measure); }
 
-.about-grid .lead { margin: 0 0 0.25rem; }
-
-.about-grid p:not(.lead) { color: var(--ink-soft); margin: 0; }
-
-/* the "not a Gunn band" disclaimer sits below a divider, clearly secondary */
-.about-grid .fine {
-  margin-top: 1.75rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border-strong);
-  font-size: 0.85rem;
-}
+/* every About paragraph reads as one block — same size, weight and colour, no
+   lead-in bump. Spacing between them comes from the flex gap above. */
+.about-grid p { color: var(--ink); margin: 0; }
 
 /* ---------- band ---------- */
 
@@ -674,22 +670,17 @@ section {
 .footer-mark {
   font-family: var(--display);
   font-weight: 800;
+  font-variation-settings: "wght" 800, "opsz" 44;   /* display optical cut, as in .wordmark */
   font-size: 1.55rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: var(--footer-fg-strong);
 }
 
 .footer-mark span { color: var(--accent-bright); }  /* light-orange footer variant — deep --accent fails contrast on the ink footer */
 
-.footer-fine {
-  flex-basis: 100%;
-  font-size: 0.85rem;
-  opacity: 0.75;
-}
-
 /* ---------- gigs ----------
-   Owned by the Previous Gigs work. Reproduced unchanged; picks up the new
-   palette through the aliases in :root. Don't restyle here — coordinate. */
+   The Previous Gigs teaser (#gigs) and the standalone gigs / gallery pages
+   (.gigs-page). On the same semantic tokens as the rest of the sheet. */
 
 .gigs-teaser {
   max-width: var(--wrap);
@@ -744,7 +735,7 @@ section {
   color: var(--accent);
 }
 
-/* tracking tuned for Bricolage, not the condensed Bebas this was written for */
+/* same display-title treatment as .recording-title */
 .gig-venue {
   font-family: var(--display);
   font-weight: 700;
@@ -784,13 +775,22 @@ section {
   color: var(--ink-soft);
 }
 
-/* full page */
+/* full page — a frosted pane on the cream field, same recipe as .bio-page, so
+   the interior gig and recordings pages sit in the site's section-grouping
+   system instead of floating bare on the texture */
 
 .gigs-page {
   max-width: 47.5rem;
-  margin: 0 auto;
-  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem) clamp(3rem, 8vw, 5rem);
-  min-height: 60vh;
+  margin: clamp(1.25rem, 3.5vw, 2.5rem) auto;
+  padding: clamp(2.25rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem) clamp(3rem, 7vw, 4rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  box-shadow:
+    var(--shadow-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .gigs-page.gallery-page {
@@ -798,10 +798,20 @@ section {
   width: 100%;
 }
 
+/* the wide gallery page is broader than --wrap, so the centred .section-head
+   would float in from the left while the intro copy and the grid sit flush
+   against the padding edge. Pull the heading back to that same left edge so
+   every element on the page shares one margin. */
+.gigs-page.gallery-page .section-head {
+  max-width: none;
+  margin: 0 0 2.75rem;
+}
+
 .gigs-page h1 {
   font-family: var(--display);
+  font-weight: 700;
   font-size: clamp(2.25rem, 6vw, 3.25rem);
-  letter-spacing: 0.07em;
+  letter-spacing: -0.015em;   /* display tracking, matching .section-head h2 */
   margin: 0;
 }
 
@@ -948,7 +958,6 @@ section {
   box-shadow:
     var(--shadow-md),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
-  min-height: 40vh;
 }
 
 .back-link {
@@ -1106,10 +1115,10 @@ section {
 .gallery-item img {
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--line);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-  transition: transform 0.2s;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--dur) var(--ease-out);
 }
 
 .gallery-item img:hover {
@@ -1120,48 +1129,50 @@ section {
   width: 100%;
   aspect-ratio: 16/9;
   background: #000;
-  border-radius: 4px;
+  border-radius: var(--radius);
   border: 1px solid var(--line);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  box-shadow: var(--shadow-md);
   display: block;
 }
 
 .gallery-item {
   cursor: zoom-in;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: var(--radius);
 }
 
 /* ---------- Lightbox ---------- */
 .lightbox {
-  display: none;
+  display: flex;
+  visibility: hidden;
   position: fixed;
   z-index: 1000;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(11, 13, 18, 0.94);
-  backdrop-filter: blur(8px);
+  inset: 0;
   align-items: center;
   justify-content: center;
+  background-color: color-mix(in srgb, var(--footer-bg) 94%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   opacity: 0;
-  transition: opacity 0.25s ease;
+  pointer-events: none;
+  transition: opacity var(--dur) ease, visibility 0s linear var(--dur);
 }
 
 .lightbox.active {
-  display: flex;
+  visibility: visible;
   opacity: 1;
+  pointer-events: auto;
+  transition: opacity var(--dur) ease;
 }
 
 .lightbox-content {
   max-width: 90vw;
   max-height: 90vh;
   object-fit: contain;
-  border-radius: 4px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
   transform: scale(0.96);
-  transition: transform 0.25s ease;
+  transition: transform var(--dur) ease;
 }
 
 .lightbox.active .lightbox-content {
@@ -1212,7 +1223,7 @@ section {
   .hero h1,
   .hero .tagline,
   .hero .cta-row { opacity: 1; transform: none; }
-  .btn:hover, .member:hover { transform: none; }
+  .btn:hover, .member:hover, .gig:hover, .gallery-item img:hover { transform: none; }
 }
 
 @media (prefers-reduced-transparency: reduce) {
@@ -1221,7 +1232,7 @@ section {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
-  .hero, .about, .band, .booking, #gigs, .bio-page {
+  .hero, .about, .band, .booking, #gigs, .bio-page, .gigs-page {
     background: var(--surface);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -1240,7 +1251,7 @@ section {
   }
   .btn-ghost { border-color: var(--ink); }
   .site-header nav a { color: var(--ink); }
-  .hero, .about, .band, .booking, #gigs, .bio-page {
+  .hero, .about, .band, .booking, #gigs, .bio-page, .gigs-page {
     background: var(--surface);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;

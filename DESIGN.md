@@ -85,13 +85,9 @@ with text or an icon if you use one.
   and `--accent-wash` if you nudge `--canvas`.
 - Secondary text is `--ink-soft` (a warm grey); it clears AA on every surface.
 
-### Back-compat aliases
-
-`--panel`, `--text`, `--text-dim`, `--brass` (→ `--accent`), `--brass-hot`
-(→ `--accent-bright`), `--ember` (→ `--flame`) point at the current tokens so
-the **gigs** block still themes correctly. `--brass` is now burnt orange, so gig
-dates and the gig card's left rule come through orange on cream. Don't delete the
-aliases until the gigs block moves to semantic tokens.
+The old `--panel` / `--text` / `--text-dim` / `--brass` / `--brass-hot` /
+`--ember` aliases are gone — every rule, gigs included, is on the semantic
+tokens now.
 
 ---
 
@@ -108,6 +104,10 @@ aliases until the gigs block moves to semantic tokens.
   on `h2`); the wordmark and headings render in **natural case**, not all-caps.
 - Weights: `800` for the wordmark, hero `h1`, bio `h1`, footer mark; `700` for
   section `h2`, member names, bio nav.
+- Bricolage carries an **optical-size axis**. Left on `auto` a small element
+  gets the flat text cut, so `.wordmark` and `.footer-mark` pin
+  `font-variation-settings: "wght" 800, "opsz" 44` to hold the expressive
+  display cut at their small size. Large headings can stay on `auto`.
 - Hero `h1` runs to `clamp(3.75rem, 14vw, 8.5rem)` — poster scale for the
   one-word name. Don't apply that scale to multi-word headings.
 - Headings use `text-wrap: balance`; body uses `text-wrap: pretty`.
@@ -122,7 +122,8 @@ is a pane of smoked glass floating on it** — that is the section grouping. The
 are no divider strips (an earlier "keyboard comb + orange downbeat" divider
 system was tried and cut; don't bring it back).
 
-The panel, applied to `.hero, .about, .band, .booking, #gigs` and `.bio-page`:
+The panel, applied to `.hero, .about, .band, .booking, #gigs`, `.bio-page` and
+`.gigs-page` (the standalone gigs, gallery and recordings pages):
 
 - `max-width: var(--wrap)` (bio pages narrower; booking matches at `--wrap` so
   its pane lines up with Previous Gigs, and focuses the ask through the narrower
@@ -153,11 +154,9 @@ Rules:
 - The hero folds its warm radial glow into the pane's tint (see `.hero` in
   `styles.css`); nothing else adds its own background.
 - Solid `--surface` fallback under `prefers-reduced-transparency` **and**
-  `prefers-contrast: more` — both are handled; keep them working.
-- `#gigs` gets the pane via an **ID selector in the panel block**, not by
-  editing the gigs code — it stays byte-for-byte untouched but still matches the
-  other sections. If the Previous Gigs work restyles that container, it wins on
-  the inner content; the pane shell is additive.
+  `prefers-contrast: more` — both lists include `.gigs-page`; keep them working.
+- `.bio-page` and `.gigs-page` repeat the recipe with their own `max-width`
+  (47.5rem; the gallery page widens to 87.5rem). Keep the three in sync.
 
 If you add a section, add its selector to the panel block. Don't reach for a
 `border-top` and don't reintroduce per-section background tints.
@@ -237,21 +236,19 @@ panels and the page texture are static.
 
 ## Sound
 
-Opt-out UI sound effects, synthesised with the Web Audio API (no audio files).
-Off by default under `prefers-reduced-motion`, on otherwise; the choice is
+Opt-in UI sound, synthesised with the Web Audio API (no audio files). **Off by
+default** — a site shouldn't make noise you didn't ask for. The choice is
 remembered (`localStorage` key `tank-sfx`). A speaker toggle leads the header
 nav.
 
-- Sounds are short (≤ 0.7s) warm electric-piano notes from one C-major
-  pentatonic scale, so nothing clashes. Master gain `0.16`.
-- Primary button → a 4-note C-major arpeggio. Ghost button / nav link → one
-  note. Member cards → one pentatonic degree each, low-to-high across the
-  roster. Hover (nav + buttons only) → a quiet tick, rate-limited, and only
-  after the audio engine is live.
-- Sound is confirmation, never information that isn't already visible.
+- One sound only: a single soft low sine "tock", ~70ms, through a closing
+  lowpass. Master gain `0.09`. No melody, no arpeggios, no per-card notes.
+- Plays on a real click only — buttons, member cards and nav links (nav a touch
+  quieter). No hover sound.
+- Sound is confirmation of a press, never information that isn't already visible.
 - Lives entirely in `sfx.js` (loaded on every page). It injects its own
   `.sfx-toggle` style from `:root` tokens with fallbacks. Wire any new
-  interactive component into the delegated handler there.
+  interactive component into the delegated `pointerdown` handler there.
 
 ---
 
@@ -281,34 +278,29 @@ nav.
 
 ---
 
-## The gigs boundary
+## Gigs pages
 
-`gigs.html`'s `<main>`, `gigs.js`, the `#gigs` teaser section in `index.html`,
-and every `.gig*` / `.gigs-*` rule in `styles.css` are **owned by the Previous
-Gigs work.** Every pass here left all of it byte-for-byte unchanged; it picks up
-the palette through the `--brass` / `--panel` / `--line` / `--text-dim` aliases.
+`gigs.html`, `greenmeadow.html`, `gigs.js`, `gallery.js`, the `#gigs` teaser in
+`index.html`, and the `.gig*` / `.gigs-*` / `.gallery*` / `.lightbox*` rules are
+part of the same system as everything else — same tokens, same panel, same
+display type. There is no separate owner.
 
-The one exception: the frosted **panel shell** is applied to the `#gigs` teaser
-via an ID selector *in the panel block* (not in the gigs code) so it matches the
-other sections. That rule only adds the pane background/blur/border/shadow/
-margins around the container — it touches no `.gig*` rule and no gig markup. If
-the Previous Gigs work restyles `.gigs-teaser`, its inner-content rules win; the
-shell is additive and easy to drop.
-
-The **font `<link>` in every page's `<head>`** (including `gigs.html`) was
-swapped to Bricolage Grotesque — that's shared chrome, identical across all
-seven pages, not gig content.
-
-When the gigs work lands:
-1. Retune the gig display type — `.gig-venue` and `.gigs-page h1` still carry
-   Bebas-era `letter-spacing` (positive) and no `font-weight`; they want
-   `font-weight: 700` and `letter-spacing: -0.01em` like the rest.
-2. Align the gig cards to the **member card** spec (opaque surface fill, 1px
-   hairline, inset top edge, hover lift) instead of `border-left: 3px` — they
-   sit on a glass pane now, so opaque is required.
-3. Move the gig rules off the aliases onto semantic tokens.
-4. `.gigs-page` (the standalone gigs page `<main>`) is not yet a frosted pane
-   like `.bio-page` — give it the same panel shell when convenient.
+- `.gigs-page` is a frosted pane (same recipe as `.bio-page`); `.gallery-page`
+  widens it to 87.5rem.
+- **Greenmeadow is the gig-page template.** Its shape — `.section-head` (rule +
+  `h1`), then `.page-intro` (`.eyebrow` date line + `.lead`), then
+  `.gallery-grid`, then `.gigs-cta` — is what a new gig page copies. Everything
+  in it shares one left edge: `.gigs-page.gallery-page .section-head` drops the
+  `max-width: --wrap` / `margin: auto` so the heading doesn't float in from the
+  left of the wide pane.
+- `.gig-venue` and `.gigs-page h1` are on the shared display tracking
+  (`-0.015em`, weight 700), like `.recording-title` and `.section-head h2`.
+- Gig and recording list cards share one style: opaque `--surface`, hairline,
+  `border-left: 3px solid var(--accent)`, hover lift. (The member grid cards are
+  a separate, borderless style.)
+- The lightbox lives in `gallery.js` + `.lightbox*` in `styles.css`; it fades
+  via `visibility` + `opacity` (no `display` swap), toggles `aria-hidden`, and
+  restores focus on close.
 
 ---
 
@@ -336,25 +328,39 @@ When the gigs work lands:
 1. **A real band photo.** The hero and the site are type-only. One good photo
    of the five of them — in the hero, or as its own shot above "The Band" — is
    the single biggest lift available.
-2. **Member photos.** Only Gavin has one (`gavin.jpg`). The bio layout already
-   supports a `.bio-photo`; the others fall back to the emoji mark.
-3. **Bios.** Jason and Glenn are still placeholders (Neil got a real bio).
-4. **Gig display type** — see The gigs boundary, item 1.
-5. **Footer copy drift.** `gavin.html`'s footer line differs from the other
-   pages. Pick one and use it everywhere (copy call, not a design call).
+2. **Member photos.** Gavin, Neil and Manu have one; Jason and Glenn fall back
+   to the emoji mark. The bio layout already supports `.bio-photo`.
+3. **Bios.** Manu's and Gavin's bio text is real but still tagged
+   `class="bio-todo"` (renders grey) with a stale "replace this" comment — drop
+   the class and comment once the copy is signed off.
 
 ---
 
 ## Decision log
 
+- **Gigs folded into the system (2026-09-08).** The "Previous Gigs is a separate
+  owner, keep it byte-for-byte" boundary was lifted. `.gigs-page` became a
+  frosted pane like `.bio-page`; `.gigs-page h1` moved to the shared display
+  tracking; the dead `--panel`/`--brass`/… aliases were deleted; the Greenmeadow
+  lightbox moved to `gallery.js` (fade via `visibility`, focus restore); the
+  Bebas webfont `<link>` on `greenmeadow.html` was swapped to Bricolage.
+  Greenmeadow is now the explicit template for future gig pages, everything on
+  it flush to one left edge.
+- **Sticky footer + opt-in sound (2026-09-08).** `body` is a flex column with
+  `main { flex: 1 0 auto }`, so the footer sits on the viewport bottom instead
+  of floating up a short page. UI sound (`sfx.js`) cut to one soft tick on
+  click, off by default.
 - **Light "sophisticated jazz" palette (2026-08-30, current).** Album-cream page,
-  deep-ink text, deep-teal accent, burnt-rust `!`, deep-ink footer slab. This is
-  where the palette landed after the band worked through several directions in
-  one sitting: beige/navy/sky → black + orange (a hard revert to the original
-  dark identity) → "towards white" → "too brown" (a warm-charcoal midpoint) →
-  "jazz colours, sophisticated, beige". Only `:root` tokens, the `body::before`
-  texture colours, and the glass panels' inner highlight changed; structure,
-  type, motion and a11y branches were all kept. Every pair re-verified for AA.
+  deep-ink text, deep-ink footer slab, and a burnt-orange / deep-teal accent
+  pair. The two accent roles were still being tuned after this entry — the token
+  table above is authoritative: `--accent` is burnt orange (anything with a
+  letter), `--flame` is deep teal (`!` and glow only). This is where the palette
+  landed after the band worked through several directions in one sitting:
+  beige/navy/sky → black + orange (a hard revert to the original dark identity)
+  → "towards white" → "too brown" (a warm-charcoal midpoint) → "jazz colours,
+  sophisticated, beige". Only `:root` tokens, the `body::before` texture colours,
+  and the glass panels' inner highlight changed; structure, type, motion and
+  a11y branches were all kept. Every pair re-verified for AA.
   Two Claude sessions were editing the repo in parallel during this; palette
   ownership was handed to this session, typography to the other.
 - **One identity, no theme remap.** The site commits to the light cream palette
@@ -377,10 +383,10 @@ When the gigs work lands:
 - **~~Beige + navy + sky~~ (superseded).** Briefly the committed palette; see
   the revert entry at the top of this log. Kept here as a record of the
   direction and why it was undone.
-- **CSS-only, plus the shared font `<link>`.** Everything is a token or a rule
-  in `styles.css`; the only HTML touched is the identical webfont `<link>` in
-  each page's `<head>`, so the in-flight Previous Gigs and bio work is untouched.
-  The revert held to the same discipline.
+- **CSS-only, plus the shared font `<link>`.** The palette passes were a token
+  or rule in `styles.css` plus the identical webfont `<link>` in each `<head>`,
+  and nothing else — the parallel Previous Gigs and bio work stayed clear of
+  them. (That boundary is since lifted — see Gigs pages.)
 - **One motion moment.** Hero entrance only.
 - **Hero stays type-only for now.** A one-word band name at poster scale is a
   legitimate "manifesto" hero. Revisit when there's a real photo (gaps #1).

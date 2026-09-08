@@ -1,13 +1,12 @@
-/* Tank! — UI sound effects.
+/* Tank! — UI sound.
  *
- * Every sound is synthesised on the fly with the Web Audio API (no audio
- * files): short, warm electric-piano notes drawn from one C major pentatonic
- * scale, so nothing ever clashes. Sound is confirmation, never a channel for
- * information that isn't already on screen.
+ * One short, soft tick, synthesised with the Web Audio API (no files) and
+ * played only on a real click. It's confirmation of a press, nothing more:
+ * no melody, no hover chimes, no per-card notes, nothing bright.
  *
- * On by default, except for visitors who ask for reduced motion. The choice is
- * remembered in localStorage ("tank-sfx"). A speaker button leads the header
- * nav. Design notes live in DESIGN.md -> "Sound".
+ * Off unless the visitor turns it on — a website shouldn't make noise you
+ * didn't ask for. The choice is remembered in localStorage ("tank-sfx"). A
+ * speaker button leads the header nav. Design notes live in DESIGN.md -> "Sound".
  *
  * Fully self-contained: the only thing outside this file is the <script> tag on
  * each page. The .sfx-toggle styling is injected below and only ever reads the
@@ -17,13 +16,11 @@
   "use strict";
 
   const STORAGE_KEY = "tank-sfx";
-  const MASTER_GAIN = 0.16;
-
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const MASTER_GAIN = 0.09;
 
   let stored = null;
   try { stored = localStorage.getItem(STORAGE_KEY); } catch (e) { /* private mode */ }
-  let enabled = stored ? stored === "on" : !reduceMotion.matches;
+  let enabled = stored === "on";
 
   /* ---------- synth ---------- */
 
@@ -41,76 +38,58 @@
     return ctx;
   }
 
-  /* One plucked note: a detuned sine + triangle pair through a closing
-     lowpass, with a fast attack and an exponential tail. */
-  function note(freq, { delay = 0, dur = 0.5, level = 1 } = {}) {
+  /* A single low sine tick through a closing lowpass — a soft "tock", ~70ms,
+     the same for every control. `level` only trims it for secondary actions. */
+  function tick(level = 1) {
     if (!enabled) return;
     const c = engine();
     if (!c) return;
     if (c.state === "suspended") c.resume();
 
-    const t = c.currentTime + delay;
+    const t = c.currentTime;
+    const dur = 0.07;
 
     const amp = c.createGain();
     amp.gain.setValueAtTime(0.0001, t);
-    amp.gain.exponentialRampToValueAtTime(Math.max(0.0002, 0.9 * level), t + 0.006);
+    amp.gain.exponentialRampToValueAtTime(Math.max(0.0002, 0.55 * level), t + 0.004);
     amp.gain.exponentialRampToValueAtTime(0.0001, t + dur);
 
     const lp = c.createBiquadFilter();
     lp.type = "lowpass";
-    lp.frequency.setValueAtTime(5200, t);
-    lp.frequency.exponentialRampToValueAtTime(1400, t + dur);
+    lp.frequency.value = 1100;
     amp.connect(lp).connect(master);
 
-    [
-      { type: "sine", detune: -4, gain: 0.8 },
-      { type: "triangle", detune: 7, gain: 0.22 },
-    ].forEach((v) => {
-      const osc = c.createOscillator();
-      osc.type = v.type;
-      osc.frequency.value = freq;
-      osc.detune.value = v.detune;
-      const vg = c.createGain();
-      vg.gain.value = v.gain;
-      osc.connect(vg).connect(amp);
-      osc.start(t);
-      osc.stop(t + dur + 0.05);
-    });
+    const osc = c.createOscillator();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(190, t);
+    osc.frequency.exponentialRampToValueAtTime(140, t + dur);
+    osc.connect(amp);
+    osc.start(t);
+    osc.stop(t + dur + 0.02);
   }
-
-  function roll(freqs, { spread = 0.045, dur = 0.65, level = 0.7 } = {}) {
-    freqs.forEach((f, i) => note(f, { delay: spread * i, dur, level }));
-  }
-
-  /* C major pentatonic, two octaves */
-  const N = {
-    C4: 261.63, D4: 293.66, E4: 329.63, G4: 392.0, A4: 440.0,
-    C5: 523.25, D5: 587.33, E5: 659.25, G5: 783.99, A5: 880.0,
-  };
-  const RIFF = [N.C4, N.D4, N.E4, N.G4, N.A4]; // one note per member card, low to high
 
   const sfx = {
-    tapPrimary: () => roll([N.C4, N.E4, N.G4, N.C5], { spread: 0.05, dur: 0.7, level: 0.7 }),
-    tapGhost: () => note(N.G4, { dur: 0.42, level: 0.6 }),
-    nav: () => note(N.E5, { dur: 0.26, level: 0.42 }),
-    hover: () => note(N.C5, { dur: 0.16, level: 0.13 }),
-    member: (i) => note(RIFF[((i % RIFF.length) + RIFF.length) % RIFF.length], { dur: 0.5, level: 0.5 }),
-    toggleOn: () => roll([N.C4, N.E4, N.A4], { spread: 0.055, dur: 0.6, level: 0.6 }),
+    press: () => tick(1),
+    nav: () => tick(0.55),
   };
 
   /* ---------- toggle button ---------- */
 
   const STYLE = `
     .sfx-toggle {
+      flex: none;
+      align-self: center;
       display: inline-grid;
       place-items: center;
-      width: 2rem;
-      height: 2rem;
+      width: 1.75rem;
+      height: 1.75rem;
+      margin: 0 -0.3rem 0 0;   /* tuck it against the nav links so it reads as part of the cluster */
       padding: 0;
       border: 1px solid transparent;
       border-radius: var(--radius-pill, 999px);
       background: transparent;
       color: var(--ink-soft, currentColor);
+      line-height: 0;
       cursor: pointer;
       -webkit-appearance: none;
       appearance: none;
@@ -118,7 +97,7 @@
                   border-color var(--dur, 200ms) ease,
                   transform var(--dur-fast, 130ms) var(--ease-out, ease);
     }
-    .sfx-toggle svg { width: 1.1rem; height: 1.1rem; display: block; }
+    .sfx-toggle svg { width: 1rem; height: 1rem; display: block; }
     .sfx-toggle:hover { color: var(--ink, currentColor); border-color: var(--border-strong, currentColor); }
     .sfx-toggle:active { transform: scale(0.88); }
     .sfx-toggle[aria-pressed="true"] { color: var(--accent, currentColor); }
@@ -162,7 +141,7 @@
     enabled = !enabled;
     try { localStorage.setItem(STORAGE_KEY, enabled ? "on" : "off"); } catch (e) { /* private mode */ }
     paint();
-    if (enabled) { engine(); sfx.toggleOn(); }
+    if (enabled) { engine(); sfx.press(); }
   });
 
   function mount() {
@@ -184,44 +163,20 @@
     }
   }
 
-  /* ---------- wiring ---------- */
-
-  let lastHover = 0;
-
-  function onHover(e) {
-    if (!enabled || !ctx || ctx.state !== "running") return; // only once the engine is live
-    const el = e.target.closest && e.target.closest(".btn, .site-header nav a");
-    if (!el || el === onHover.last) return;
-    onHover.last = el;
-    const now = (window.performance && performance.now()) || Date.now();
-    if (now - lastHover < 70) return;
-    lastHover = now;
-    sfx.hover();
-  }
+  /* ---------- wiring ----------
+     Click only, and the same tick everywhere. No hover sound. */
 
   function onDown(e) {
     if (!enabled) return;
     const t = e.target;
     if (!t.closest) return;
 
-    const button = t.closest(".btn");
-    if (button) {
-      if (button.classList.contains("btn-primary")) sfx.tapPrimary();
-      else sfx.tapGhost();
-      return;
-    }
-    const card = t.closest(".member");
-    if (card) {
-      const cards = Array.prototype.slice.call(document.querySelectorAll(".member"));
-      sfx.member(cards.indexOf(card));
-      return;
-    }
+    if (t.closest(".btn, .member")) { sfx.press(); return; }
     if (t.closest(".site-header nav a")) sfx.nav();
   }
 
   function start() {
     mount();
-    document.addEventListener("pointerover", onHover, { passive: true });
     document.addEventListener("pointerdown", onDown, { passive: true });
   }
 
