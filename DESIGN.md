@@ -123,7 +123,7 @@ are no divider strips (an earlier "keyboard comb + orange downbeat" divider
 system was tried and cut; don't bring it back).
 
 The panel, applied to `.hero, .about, .band, .booking, #gigs`, `.bio-page` and
-`.gigs-page` (the standalone gigs, gallery and recordings pages):
+`.gigs-page` (the standalone gig / gallery pages):
 
 - `max-width: var(--wrap)` (bio pages narrower; booking matches at `--wrap` so
   its pane lines up with Previous Gigs, and focuses the ask through the narrower
@@ -155,8 +155,10 @@ Rules:
   `styles.css`); nothing else adds its own background.
 - Solid `--surface` fallback under `prefers-reduced-transparency` **and**
   `prefers-contrast: more` — both lists include `.gigs-page`; keep them working.
-- `.bio-page` and `.gigs-page` repeat the recipe with their own `max-width`
-  (47.5rem; the gallery page widens to 87.5rem). Keep the three in sync.
+- `.bio-page` and `.gigs-page` repeat the recipe (same padding, border,
+  tint, shadow — keep those in sync). Widths differ by content: `.bio-page`
+  47.5rem for prose, `.gigs-page` 54rem for the gig cards, the gallery page
+  87.5rem.
 
 If you add a section, add its selector to the panel block. Don't reach for a
 `border-top` and don't reintroduce per-section background tints.
@@ -267,10 +269,11 @@ nav.
   edge as the panes; hover = lift + stronger border + medium shadow. "Read bio"
   is always link-coloured so the card reads as clickable. The 5 cards are
   equivalent nav choices, so a repeated card grid is correct here.
-- **Footer:** the darkest surface on the page. `.footer-contact` holds the
-  email and phone (`650-334-7667`) as `--accent` links at `1.15rem` — the
-  footer's whole job is being reachable, so the contact details outsize the
-  surrounding chrome. The wordmark and the fine-print disclaimer stay quiet.
+- **Footer:** the darkest surface on the page, and deliberately spare — just the
+  `Tank!` wordmark and `.footer-contact` (email + phone `650-334-7667`) as
+  `--accent-bright` links at `1.15rem`. The footer's whole job is being
+  reachable, so the contact details outsize everything else; there is no
+  tagline or disclaimer line.
 - **Anchor targets** (`#about`, `#band`, `#booking`) carry `scroll-margin-top`
   so the sticky header never covers a heading you jumped to.
 - **Browser surfaces are themed:** `::selection`, caret, `accent-color`, focus
@@ -294,8 +297,8 @@ display type. There is no separate owner.
   `max-width: --wrap` / `margin: auto` so the heading doesn't float in from the
   left of the wide pane.
 - `.gig-venue` and `.gigs-page h1` are on the shared display tracking
-  (`-0.015em`, weight 700), like `.recording-title` and `.section-head h2`.
-- Gig and recording list cards share one style: opaque `--surface`, hairline,
+  (`-0.015em`, weight 700), like `.section-head h2`.
+- Gig list cards (`.gig`): opaque `--surface`, hairline,
   `border-left: 3px solid var(--accent)`, hover lift. (The member grid cards are
   a separate, borderless style.)
 - The lightbox lives in `gallery.js` + `.lightbox*` in `styles.css`; it fades
