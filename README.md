@@ -22,9 +22,10 @@ files you see are the files that get served.
 ```
 .
 ├── index.html                 home page
-├── gavin.html … manu.html     player bios
-├── gigs.html                  previous gigs
-├── greenmeadow.html           gig gallery (template for future gig pages)
+├── players/                   one page per player (gavin.html … neil.html)
+├── gigs/
+│   ├── index.html             the "previous gigs" list  (/gigs/)
+│   └── greenmeadow.html       a gig's photo gallery — the template for new gig pages
 ├── vercel.json                tells Vercel not to build (see Hosting)
 └── assets/
     ├── styles.css             all styling
@@ -32,6 +33,10 @@ files you see are the files that get served.
     ├── images/                 band, player and gig photos
     └── video/                  gig video
 ```
+
+**Adding a gig:** drop `gigs/<name>.html` (copy `greenmeadow.html`) and add an
+entry to `assets/js/gigs.js` — the home teaser and `/gigs/` list both update.
+**Adding a player:** add `players/<name>.html` and a card in `index.html`.
 
 `package.json` exists only for the optional local dev server (`npm run dev`).
 Nothing on the site depends on it.

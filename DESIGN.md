@@ -244,8 +244,8 @@ panels and the page texture are static.
   ending in `#booking` and no markup change is needed.
 - **Nav is four in-page anchors.** About / The Band / Previous Gigs / Booking all
   point at a section on `index.html` (`#about`, `#band`, `#gigs`, `#booking`) —
-  from a sub-page they go `index.html#…`. "Previous Gigs" lands on the `#gigs`
-  teaser; the full `gigs.html` archive is one click further via its "See all
+  from a sub-page they go `../index.html#…`. "Previous Gigs" lands on the `#gigs`
+  teaser; the full `/gigs/` archive is one click further via its "See all
   gigs →" button. No nav item deep-links to a sub-page.
 - **Buttons:** `.btn-primary` = teal fill + cream label (the book action).
   `.btn-ghost` = ink text, strong border, pale-teal fill on hover.
@@ -270,20 +270,26 @@ panels and the page texture are static.
 
 ## Gigs pages
 
-`gigs.html`, `greenmeadow.html`, `assets/js/gigs.js`, `assets/js/gallery.js`, the
-`#gigs` teaser in `index.html`, and the `.gig*` / `.gigs-*` / `.gallery*` /
-`.lightbox*` rules are
-part of the same system as everything else — same tokens, same panel, same
-display type. There is no separate owner.
+`gigs/` (its `index.html` list + one page per gig, e.g. `greenmeadow.html`),
+`assets/js/gigs.js`, `assets/js/gallery.js`, the `#gigs` teaser in `index.html`,
+and the `.gig*` / `.gigs-*` / `.gallery*` / `.lightbox*` rules are part of the
+same system as everything else — same tokens, same panel, same display type.
+There is no separate owner.
+
+- **Layout:** player bios live in `players/`, gig pages in `gigs/`, shared
+  assets in `assets/`. Sub-pages reach the root with `../`. The gig `link` in
+  `gigs.js` is just a filename; `renderGigs(mount, limit, basePath)` takes the
+  prefix (`"gigs/"` from the root teaser, omitted from inside `gigs/`).
 
 - `.gigs-page` is a frosted pane (same recipe as `.bio-page`), `--wrap` wide so
   the Previous Gigs pane matches the home-page section panes; `.gallery-page`
   widens it further to 87.5rem. Both carry `width: 100%` — a flex item (which
   `<main>` is, for the sticky footer) with `margin-inline: auto` shrinks to its
   content width without it.
-- **Greenmeadow is the gig-page template.** Its shape — `.section-head` (rule +
-  `h1`), then `.page-intro` (`.eyebrow` date line + `.lead`), then
-  `.gallery-grid`, then `.gigs-cta` — is what a new gig page copies. Everything
+- **`gigs/greenmeadow.html` is the gig-page template.** Its shape —
+  `.section-head` (rule + `h1`), then `.page-intro` (`.eyebrow` date line +
+  `.lead`), then `.gallery-grid`, then `.gigs-cta` — is what a new gig page
+  copies. Everything
   in it shares one left edge: `.gigs-page.gallery-page .section-head` drops the
   `max-width: --wrap` / `margin: auto` so the heading doesn't float in from the
   left of the wide pane.
@@ -332,6 +338,11 @@ display type. There is no separate owner.
 
 ## Decision log
 
+- **File layout (2026-09-08).** Assets moved to `assets/`; player bios to
+  `players/`; the gig list and gig pages to `gigs/` (`gigs.html` → `gigs/index.html`,
+  URL `/gigs/`). Sub-pages use `../` to reach the root. `gigs.js` gained a
+  `basePath` arg so the one gig `link` field works from the root teaser and from
+  inside `gigs/`.
 - **UI sound removed (2026-09-08).** The opt-in Web Audio click and its header
   speaker toggle (`sfx.js`) were cut — a booking site doesn't need a press tick.
   `sfx.js` deleted, its `<script>` tag pulled from every page.

@@ -1,12 +1,14 @@
 /* Tank! gig history — the single place to edit.
  *
- * Both the short teaser on the home page and the full list on gigs.html
- * read from this array, so adding a show here updates both.
+ * Both the short teaser on the home page and the full list on gigs/index.html
+ * read from this array, so adding a show here updates both. To add a gig:
+ * drop its page in gigs/ and add an entry below; `link` is the filename,
+ * relative to the gigs/ folder.
  *
  * Each entry: date is YYYY-MM-DD; note is optional and may be left out.
  *
  *   { date: "2026-05-12", venue: "The Blue Room", city: "Oakland, CA",
- *     note: "Opening for the Ellis Quartet" },
+ *     note: "Opening for the Ellis Quartet", link: "blue-room.html" },
  */
 const GIGS = [
   {
@@ -35,7 +37,7 @@ function sortedGigs() {
   return [...GIGS].sort((a, b) => b.date.localeCompare(a.date));
 }
 
-function gigItem(gig) {
+function gigItem(gig, basePath) {
   const li = document.createElement("li");
   li.className = "gig";
 
@@ -65,7 +67,7 @@ function gigItem(gig) {
   if (gig.link) {
     const link = document.createElement("a");
     link.className = "gig-link";
-    link.href = gig.link;
+    link.href = (basePath || "") + gig.link;
     link.textContent = "View photos & media →";
     li.append(link);
   }
@@ -79,8 +81,10 @@ function emptyState() {
   return p;
 }
 
-/* limit: how many to show (the home page teaser passes a number) */
-function renderGigs(mountId, limit) {
+/* limit: how many to show (the home page teaser passes a number).
+   basePath: prefix for each gig's `link`, since the page rendering the list
+   may sit at the site root (pass "gigs/") or inside gigs/ (pass "" / omit). */
+function renderGigs(mountId, limit, basePath) {
   const mount = document.getElementById(mountId);
   if (!mount) return;
 
@@ -93,5 +97,5 @@ function renderGigs(mountId, limit) {
   }
 
   const shown = limit ? gigs.slice(0, limit) : gigs;
-  shown.forEach(gig => mount.append(gigItem(gig)));
+  shown.forEach(gig => mount.append(gigItem(gig, basePath)));
 }
