@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "echo \"Tank! is a static site — nothing to build.\"",
+  "outputDirectory": "."
+}
