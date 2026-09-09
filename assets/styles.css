@@ -571,6 +571,15 @@ section {
   margin-bottom: 0.7rem;
 }
 
+/* Neil's mark. Unicode has no trombone, so his is drawn — sized in em so it
+   tracks the emoji marks it sits next to on the roster and his bio page. */
+.mark-svg {
+  display: block;
+  margin-inline: auto;
+  width: 1.7em;
+  height: auto;
+}
+
 /* the member cards read as plain UI, not display type — name, instrument and
    "Read bio" all in the body font */
 .member h3 {
