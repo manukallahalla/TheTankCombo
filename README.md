@@ -16,10 +16,20 @@ Booking: [thetankcombo@gmail.com](mailto:thetankcombo@gmail.com)
 
 ## The site
 
-A static single-page site — no build step, no dependencies.
+A static site — plain HTML, CSS and a little JavaScript. No build step, no dependencies.
 
-- `index.html` — all page content
-- `styles.css` — all styling
+```
+.
+├── index.html                 home page
+├── gavin.html … manu.html     player bios
+├── gigs.html                  previous gigs
+├── greenmeadow.html           gig gallery (template for future gig pages)
+└── assets/
+    ├── styles.css             all styling
+    ├── js/                     gigs.js (gig list), gallery.js (lightbox)
+    ├── images/                 band, player and gig photos
+    └── video/                  gig video
+```
 
 ### Run it locally
 

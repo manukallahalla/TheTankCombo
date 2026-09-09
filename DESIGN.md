@@ -40,7 +40,7 @@ Cream, burnt orange and teal — **a single light identity, no dark mode.** An
 album-sleeve cream page, deep ink-blue text, a **burnt-orange** primary accent,
 **deep teal** as the secondary (the `!` and the background glow). Sophisticated
 jazz, warm paper (not brown), at the band's request — Blue Note more than ECM.
-Everything is driven by the semantic tokens in `styles.css :root` — **never
+Everything is driven by the semantic tokens in `assets/styles.css :root` — **never
 hard-code a hex in a component rule.**
 
 | Token | Hex | Role | Contrast on canvas |
@@ -152,7 +152,7 @@ Rules:
 - Opaque children read as figure on the glass — keep member cards, the footer
   and the header opaque.
 - The hero folds its warm radial glow into the pane's tint (see `.hero` in
-  `styles.css`); nothing else adds its own background.
+  `assets/styles.css`); nothing else adds its own background.
 - Solid `--surface` fallback under `prefers-reduced-transparency` **and**
   `prefers-contrast: more` — both lists include `.gigs-page`; keep them working.
 - `.bio-page` and `.gigs-page` repeat the recipe (same padding, border,
@@ -265,8 +265,9 @@ panels and the page texture are static.
 
 ## Gigs pages
 
-`gigs.html`, `greenmeadow.html`, `gigs.js`, `gallery.js`, the `#gigs` teaser in
-`index.html`, and the `.gig*` / `.gigs-*` / `.gallery*` / `.lightbox*` rules are
+`gigs.html`, `greenmeadow.html`, `assets/js/gigs.js`, `assets/js/gallery.js`, the
+`#gigs` teaser in `index.html`, and the `.gig*` / `.gigs-*` / `.gallery*` /
+`.lightbox*` rules are
 part of the same system as everything else — same tokens, same panel, same
 display type. There is no separate owner.
 
@@ -283,7 +284,7 @@ display type. There is no separate owner.
 - Gig list cards (`.gig`): opaque `--surface`, hairline,
   `border-left: 3px solid var(--accent)`, hover lift. (The member grid cards are
   a separate, borderless style.)
-- The lightbox lives in `gallery.js` + `.lightbox*` in `styles.css`; it fades
+- The lightbox lives in `assets/js/gallery.js` + `.lightbox*` in `assets/styles.css`; it fades
   via `visibility` + `opacity` (no `display` swap), toggles `aria-hidden`, and
   restores focus on close.
 
@@ -371,7 +372,7 @@ display type. There is no separate owner.
   the revert entry at the top of this log. Kept here as a record of the
   direction and why it was undone.
 - **CSS-only, plus the shared font `<link>`.** The palette passes were a token
-  or rule in `styles.css` plus the identical webfont `<link>` in each `<head>`,
+  or rule in `assets/styles.css` plus the identical webfont `<link>` in each `<head>`,
   and nothing else — the parallel Previous Gigs and bio work stayed clear of
   them. (That boundary is since lifted — see Gigs pages.)
 - **One motion moment.** Hero entrance only.
