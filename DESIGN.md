@@ -242,6 +242,11 @@ panels and the page texture are static.
   under it. Nav on one line, ≤ 72px tall. The **Booking** link is promoted to a
   filled teal pill on every page via `nav a[href$="#booking"]` — keep the href
   ending in `#booking` and no markup change is needed.
+- **Nav is four in-page anchors.** About / The Band / Previous Gigs / Booking all
+  point at a section on `index.html` (`#about`, `#band`, `#gigs`, `#booking`) —
+  from a sub-page they go `index.html#…`. "Previous Gigs" lands on the `#gigs`
+  teaser; the full `gigs.html` archive is one click further via its "See all
+  gigs →" button. No nav item deep-links to a sub-page.
 - **Buttons:** `.btn-primary` = teal fill + cream label (the book action).
   `.btn-ghost` = ink text, strong border, pale-teal fill on hover.
 - **Section panels:** see Frosted section panels. The section grouping and the
@@ -256,8 +261,8 @@ panels and the page texture are static.
   `--accent-bright` links at `1.15rem`. The footer's whole job is being
   reachable, so the contact details outsize everything else; there is no
   tagline or disclaimer line.
-- **Anchor targets** (`#about`, `#band`, `#booking`) carry `scroll-margin-top`
-  so the sticky header never covers a heading you jumped to.
+- **Anchor targets** (`#about`, `#band`, `#gigs`, `#booking`) carry
+  `scroll-margin-top` so the sticky header never covers a heading you jumped to.
 - **Browser surfaces are themed:** `::selection`, caret, `accent-color`, focus
   rings, scrollbar, underline offset. Keep them themed.
 
@@ -271,8 +276,11 @@ panels and the page texture are static.
 part of the same system as everything else — same tokens, same panel, same
 display type. There is no separate owner.
 
-- `.gigs-page` is a frosted pane (same recipe as `.bio-page`); `.gallery-page`
-  widens it to 87.5rem.
+- `.gigs-page` is a frosted pane (same recipe as `.bio-page`), `--wrap` wide so
+  the Previous Gigs pane matches the home-page section panes; `.gallery-page`
+  widens it further to 87.5rem. Both carry `width: 100%` — a flex item (which
+  `<main>` is, for the sticky footer) with `margin-inline: auto` shrinks to its
+  content width without it.
 - **Greenmeadow is the gig-page template.** Its shape — `.section-head` (rule +
   `h1`), then `.page-intro` (`.eyebrow` date line + `.lead`), then
   `.gallery-grid`, then `.gigs-cta` — is what a new gig page copies. Everything
