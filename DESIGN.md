@@ -9,9 +9,9 @@ palette**: album-cream page, deep-ink text, deep-teal accent, burnt-rust `!`.
 This followed a dark black+orange direction that the band asked to move off
 ("towards white", then "too brown", then "jazz colours, beige"). Same day:
 replaced the section dividers with **frosted-glass section panels**; display
-face is Bricolage Grotesque (member-card names on body font); added `sfx.js`
-(see Sound). The palette has changed direction several times — treat the token
-table as current and check the decision log for why.
+face is Bricolage Grotesque (member-card names on body font). The palette has
+changed direction several times — treat the token table as current and check
+the decision log for why.
 
 ---
 
@@ -236,24 +236,6 @@ panels and the page texture are static.
 
 ---
 
-## Sound
-
-Opt-in UI sound, synthesised with the Web Audio API (no audio files). **Off by
-default** — a site shouldn't make noise you didn't ask for. The choice is
-remembered (`localStorage` key `tank-sfx`). A speaker toggle leads the header
-nav.
-
-- One sound only: a single soft low sine "tock", ~70ms, through a closing
-  lowpass. Master gain `0.09`. No melody, no arpeggios, no per-card notes.
-- Plays on a real click only — buttons, member cards and nav links (nav a touch
-  quieter). No hover sound.
-- Sound is confirmation of a press, never information that isn't already visible.
-- Lives entirely in `sfx.js` (loaded on every page). It injects its own
-  `.sfx-toggle` style from `:root` tokens with fallbacks. Wire any new
-  interactive component into the delegated `pointerdown` handler there.
-
----
-
 ## Components
 
 - **Header:** sticky, translucent (`backdrop-filter` + 82% canvas), one hairline
@@ -341,6 +323,9 @@ display type. There is no separate owner.
 
 ## Decision log
 
+- **UI sound removed (2026-09-08).** The opt-in Web Audio click and its header
+  speaker toggle (`sfx.js`) were cut — a booking site doesn't need a press tick.
+  `sfx.js` deleted, its `<script>` tag pulled from every page.
 - **Gigs folded into the system (2026-09-08).** The "Previous Gigs is a separate
   owner, keep it byte-for-byte" boundary was lifted. `.gigs-page` became a
   frosted pane like `.bio-page`; `.gigs-page h1` moved to the shared display
@@ -349,10 +334,9 @@ display type. There is no separate owner.
   Bebas webfont `<link>` on `greenmeadow.html` was swapped to Bricolage.
   Greenmeadow is now the explicit template for future gig pages, everything on
   it flush to one left edge.
-- **Sticky footer + opt-in sound (2026-09-08).** `body` is a flex column with
+- **Sticky footer (2026-09-08).** `body` is a flex column with
   `main { flex: 1 0 auto }`, so the footer sits on the viewport bottom instead
-  of floating up a short page. UI sound (`sfx.js`) cut to one soft tick on
-  click, off by default.
+  of floating up a short page.
 - **Light "sophisticated jazz" palette (2026-08-30, current).** Album-cream page,
   deep-ink text, deep-ink footer slab, and a burnt-orange / deep-teal accent
   pair. The two accent roles were still being tuned after this entry — the token
