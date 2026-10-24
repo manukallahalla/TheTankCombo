@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upcoming Gigs — Tank!</title>
+<meta name="description" content="Where to catch the high school jazz combo Tank! next.">
+<meta property="og:title" content="Upcoming Gigs — Tank!">
+<meta property="og:description" content="Where to catch the jazz combo Tank! next.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="../index.html">Tank<span>!</span></a>
+  <nav>
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#band">The Band</a>
+    <a href="../index.html#gigs">Previous Gigs</a>
+    <a href="upcoming.html">Upcoming Gigs</a>
+    <a href="../index.html#booking">Booking</a>
+  </nav>
+</header>
+
+<main class="gigs-page">
+
+  <div class="section-head">
+    <span class="rule"></span>
+    <h1>Upcoming Gigs</h1>
+  </div>
+
+  <div class="page-intro">
+    <p class="lead">Here's where you can catch us next. Come say hi.</p>
+  </div>
+
+  <ul class="gig-list" id="gig-list"></ul>
+
+  <noscript>
+    <p class="gig-empty">This list needs JavaScript to load. If yours is off, email
+    <a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a> and we'll
+    just send it to you.</p>
+  </noscript>
+
+  <div class="gigs-cta">
+    <p>Want to add yours to the list?</p>
+    <a class="btn btn-primary" href="../index.html#booking">Book the band</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">Tank<span>!</span></p>
+  <div class="footer-contact">
+    <a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a>
+  </div>
+</footer>
+
+<script src="../assets/js/gigs.js"></script>
+<script>renderUpcomingGigs("gig-list");</script>
+
+</body>
+</html>

@@ -257,7 +257,7 @@ panels and the page texture are static.
   is always link-coloured so the card reads as clickable. The 5 cards are
   equivalent nav choices, so a repeated card grid is correct here.
 - **Footer:** the darkest surface on the page, and deliberately spare — just the
-  `Tank!` wordmark and `.footer-contact` (email + phone `650-334-7667`) as
+  `Tank!` wordmark and `.footer-contact` (email only — the phone number was removed 2026-10-23) as
   `--accent-bright` links at `1.15rem`. The footer's whole job is being
   reachable, so the contact details outsize everything else; there is no
   tagline or disclaimer line.

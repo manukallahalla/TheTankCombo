@@ -655,7 +655,7 @@ section {
 
 .site-footer p { margin: 0; }
 
-/* email + phone — the reason the footer exists, so keep them prominent */
+/* email — the reason the footer exists, so keep them prominent */
 .footer-contact {
   display: flex;
   flex-wrap: wrap;

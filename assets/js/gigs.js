@@ -20,6 +20,36 @@ const GIGS = [
   }
 ];
 
+/* Upcoming shows, listed on gigs/upcoming.html (soonest first). Once a show
+ * has happened it drops off that page by itself; move it into GIGS above
+ * when its photos page is ready.
+ *
+ * Same fields as GIGS, plus optional `time` and `address`. `link` here is a
+ * full URL (event / ticket page) and `linkText` labels it.
+ */
+const UPCOMING_GIGS = [
+  {
+    date: "2026-10-25",
+    time: "12pm – 1pm",
+    venue: "Magical Bridge Gig",
+    address: "Magical Bridge Playground, 3700 Middlefield Rd",
+    city: "Palo Alto, CA",
+    note: "A full hour of Tank! horns and Halloween tunes. Bring your costume and come dance with us.",
+    link: "https://www.magicalbridge.org/event-details/halloween-costume-party",
+    linkText: "Event info →"
+  },
+  {
+    date: "2026-11-07",
+    time: "1:45pm – 2:30pm",
+    venue: "YCS Gig",
+    address: "First Presbyterian Church, 1140 Cowper St",
+    city: "Palo Alto, CA",
+    note: "We're bringing a jazzy afternoon set to YCS's United We Rise celebration. Come hear us play.",
+    link: "https://www.youthcommunityservice.org/unitedwerise2026?blm_aid=581900341",
+    linkText: "Tickets & info →"
+  }
+];
+
 /* ---------- rendering ---------- */
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -50,12 +80,15 @@ function gigItem(gig, basePath) {
   venue.className = "gig-venue";
   venue.textContent = gig.venue;
 
+  if (gig.time) time.textContent += ` · ${gig.time}`;
+
   li.append(time, venue);
 
-  if (gig.city) {
+  const place = [gig.address, gig.city].filter(Boolean).join(", ");
+  if (place) {
     const city = document.createElement("p");
     city.className = "gig-city";
-    city.textContent = gig.city;
+    city.textContent = place;
     li.append(city);
   }
   if (gig.note) {
@@ -68,16 +101,16 @@ function gigItem(gig, basePath) {
     const link = document.createElement("a");
     link.className = "gig-link";
     link.href = (basePath || "") + gig.link;
-    link.textContent = "View photos & media →";
+    link.textContent = gig.linkText || "View photos & media →";
     li.append(link);
   }
   return li;
 }
 
-function emptyState() {
+function emptyState(text) {
   const p = document.createElement("p");
   p.className = "gig-empty";
-  p.textContent = "Nothing on the list yet. Check back later.";
+  p.textContent = text || "Nothing on the list yet. Check back later.";
   return p;
 }
 
@@ -98,4 +131,36 @@ function renderGigs(mountId, limit, basePath) {
 
   const shown = limit ? gigs.slice(0, limit) : gigs;
   shown.forEach(gig => mount.append(gigItem(gig, basePath)));
+}
+
+/* Today as YYYY-MM-DD in the viewer's local time, to compare against `date`. */
+function todayIso() {
+  const now = new Date();
+  const pad = n => String(n).padStart(2, "0");
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
+/* Upcoming shows, soonest first, skipping any whose date has passed. Links
+   are full URLs, so no basePath. */
+function renderUpcomingGigs(mountId) {
+  const mount = document.getElementById(mountId);
+  if (!mount) return;
+
+  const today = todayIso();
+  const gigs = UPCOMING_GIGS
+    .filter(gig => gig.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  mount.innerHTML = "";
+
+  if (!gigs.length) {
+    mount.replaceWith(emptyState("Nothing booked right now. Check back soon, or book us yourself."));
+    return;
+  }
+
+  gigs.forEach(gig => {
+    const li = gigItem(gig);
+    const link = li.querySelector(".gig-link");
+    if (link) { link.target = "_blank"; link.rel = "noopener"; }
+    mount.append(li);
+  });
 }
