@@ -785,6 +785,32 @@ section {
   color: var(--link-hover);
 }
 
+/* a card with its own details page: an invisible link stretched over the
+   whole card, with the card's own link lifted above it */
+.gig-clickable { position: relative; }
+
+.gig-card-link {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.gig-clickable .gig-link {
+  position: relative;
+  z-index: 1;
+}
+
+/* a single full-width flyer image on a gig details page */
+.gig-flyer {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 2.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+
 .gig-empty {
   margin: 0 0 2.25rem;
   color: var(--ink-soft);

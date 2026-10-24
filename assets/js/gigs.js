@@ -25,7 +25,8 @@ const GIGS = [
  * when its photos page is ready.
  *
  * Same fields as GIGS, plus optional `time` and `address`. `link` here is a
- * full URL (event / ticket page) and `linkText` labels it.
+ * full URL (event / ticket page) and `linkText` labels it. Optional `page` is
+ * a details page in gigs/; when set, clicking anywhere on the card opens it.
  */
 const UPCOMING_GIGS = [
   {
@@ -36,7 +37,8 @@ const UPCOMING_GIGS = [
     city: "Palo Alto, CA",
     note: "A full hour of Tank! horns and Halloween tunes. Bring your costume and come dance with us.",
     link: "https://www.magicalbridge.org/event-details/halloween-costume-party",
-    linkText: "Event info →"
+    linkText: "Event info →",
+    page: "magical-bridge.html"
   },
   {
     date: "2026-11-07",
@@ -46,7 +48,8 @@ const UPCOMING_GIGS = [
     city: "Palo Alto, CA",
     note: "We're bringing a jazzy afternoon set to YCS's United We Rise celebration. Come hear us play.",
     link: "https://www.youthcommunityservice.org/unitedwerise2026?blm_aid=581900341",
-    linkText: "Tickets & info →"
+    linkText: "Tickets & info →",
+    page: "ycs.html"
   }
 ];
 
@@ -161,6 +164,14 @@ function renderUpcomingGigs(mountId) {
     const li = gigItem(gig);
     const link = li.querySelector(".gig-link");
     if (link) { link.target = "_blank"; link.rel = "noopener"; }
+    if (gig.page) {
+      const card = document.createElement("a");
+      card.className = "gig-card-link";
+      card.href = gig.page;
+      card.setAttribute("aria-label", `${gig.venue} details`);
+      li.classList.add("gig-clickable");
+      li.prepend(card);
+    }
     mount.append(li);
   });
 }
