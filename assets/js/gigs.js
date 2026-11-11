@@ -17,6 +17,20 @@ const GIGS = [
     city: "Palo Alto, CA",
     note: "Memorial Day Celebration",
     link: "greenmeadow.html"
+  },
+  {
+    date: "2026-10-25",
+    venue: "Magical Bridge Playground",
+    city: "Palo Alto, CA",
+    note: "Halloween Costume Party",
+    link: "magical-bridge.html"
+  },
+  {
+    date: "2026-11-07",
+    venue: "YCS Event",
+    city: "Palo Alto, CA",
+    note: "Youth Community Service celebration at First Presbyterian Church",
+    link: "ycs.html"
   }
 ];
 
@@ -28,30 +42,7 @@ const GIGS = [
  * full URL (event / ticket page) and `linkText` labels it. Optional `page` is
  * a details page in gigs/; when set, clicking anywhere on the card opens it.
  */
-const UPCOMING_GIGS = [
-  {
-    date: "2026-10-25",
-    time: "12pm – 1pm",
-    venue: "Magical Bridge Gig",
-    address: "Magical Bridge Playground, 3700 Middlefield Rd",
-    city: "Palo Alto, CA",
-    note: "A full hour of Tank! horns and Halloween tunes. Bring your costume and come dance with us.",
-    link: "https://www.magicalbridge.org/event-details/halloween-costume-party",
-    linkText: "Event info →",
-    page: "magical-bridge.html"
-  },
-  {
-    date: "2026-11-07",
-    time: "1:45pm – 2:30pm",
-    venue: "YCS Gig",
-    address: "First Presbyterian Church, 1140 Cowper St",
-    city: "Palo Alto, CA",
-    note: "We're bringing a jazzy afternoon set to YCS's United We Rise celebration. Come hear us play.",
-    link: "https://www.youthcommunityservice.org/unitedwerise2026?blm_aid=581900341",
-    linkText: "Tickets & info →",
-    page: "ycs.html"
-  }
-];
+const UPCOMING_GIGS = [];
 
 /* ---------- rendering ---------- */
 

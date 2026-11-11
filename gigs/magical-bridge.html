@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Magical Bridge Gig — Tank!</title>
-<meta name="description" content="Tank! plays the Halloween Costume Party at Palo Alto's Magical Bridge Playground on 25 October 2026.">
-<meta property="og:title" content="Magical Bridge Gig — Tank!">
-<meta property="og:description" content="Catch us at the Magical Bridge Halloween Costume Party.">
+<title>Magical Bridge Playground — Tank!</title>
+<meta name="description" content="Photos and video from Tank!'s Halloween Costume Party gig at Magical Bridge Playground in Palo Alto.">
+<meta property="og:title" content="Magical Bridge Playground — Tank!">
+<meta property="og:description" content="Photos and video from our Halloween 2026 show.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎺</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,28 +27,55 @@
   </nav>
 </header>
 
-<main class="gigs-page">
+<main class="gigs-page gallery-page">
 
   <div class="section-head">
     <span class="rule"></span>
-    <h1>Magical Bridge Gig</h1>
+    <h1>Magical Bridge Playground</h1>
   </div>
 
   <div class="page-intro">
-    <p class="eyebrow">Halloween Costume Party &middot; 25 Oct 2026 &middot; 12pm – 1pm</p>
+    <p class="eyebrow">Halloween Costume Party &middot; 25 Oct 2026</p>
     <p class="lead">
-      A full hour of Tank! horns and Halloween tunes at Magical Bridge
-      Playground, 3700 Middlefield Rd, Palo Alto. Bring your costume and come
-      dance with us.
+      We played a full hour of Halloween tunes at the Magical Bridge Halloween
+      Costume Party, silly hats and all. Here are some photos and video from
+      the afternoon.
     </p>
   </div>
 
-  <img class="gig-flyer" src="../assets/images/magical-bridge-flyer.png"
-       alt="Magical Bridge Halloween Costume Party event page: Sun, Oct 25, 10 AM – 1 PM at Palo Alto Magical Bridge Playground, with music from Tank! Jazz Band">
+  <div class="gallery-grid">
+    <!-- left: event flyer -->
+    <div class="gallery-column">
+      <div class="gallery-item">
+        <img src="../assets/images/magical-bridge-flyer.png"
+             alt="Magical Bridge Halloween Costume Party event page: Sun, Oct 25, 10 AM – 1 PM at Palo Alto Magical Bridge Playground, with music from Tank! Jazz Band">
+      </div>
+    </div>
+
+    <!-- centre: gig video -->
+    <div class="gallery-column">
+      <video class="gig-video" controls preload="metadata"
+             poster="../assets/images/magical-bridge-video-poster.jpg"
+             src="../assets/video/magical-bridge-video.mp4">
+        Your browser can&rsquo;t play this video.
+        <a href="../assets/video/magical-bridge-video.mp4">Download it instead</a>.
+      </video>
+    </div>
+
+    <!-- right: landscape photos -->
+    <div class="gallery-column">
+      <div class="gallery-item">
+        <img src="../assets/images/magical-bridge_1.jpg" alt="Tank! performing in Halloween hats on the Levy-Huey Community Stage at Magical Bridge Playground">
+      </div>
+      <div class="gallery-item">
+        <img src="../assets/images/magical-bridge_2.jpg" alt="Tank! members posing with their instruments on the Levy-Huey Community Stage">
+      </div>
+    </div>
+  </div>
 
   <div class="gigs-cta">
-    <p>More details on the Magical Bridge site.</p>
-    <a class="btn btn-primary" href="https://www.magicalbridge.org/event-details/halloween-costume-party" target="_blank" rel="noopener">Event info</a>
+    <p>Want us at your next event?</p>
+    <a class="btn btn-primary" href="../index.html#booking">Book the band</a>
   </div>
 
 </main>
@@ -59,6 +86,13 @@
     <a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a>
   </div>
 </footer>
+
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
+  <img class="lightbox-content" id="lightbox-img" src="" alt="">
+</div>
+
+<script src="../assets/js/gallery.js"></script>
 
 </body>
 </html>
