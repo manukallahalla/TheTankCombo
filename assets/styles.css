@@ -1066,6 +1066,16 @@ section {
   display: block;
 }
 
+/* phone videos shot upright */
+.gig-video-portrait {
+  aspect-ratio: 9/16;
+}
+
+/* centre a short item (e.g. a wide photo) beside tall portrait videos */
+.gallery-column-middle {
+  align-self: center;
+}
+
 .gallery-item {
   cursor: zoom-in;
   overflow: hidden;
