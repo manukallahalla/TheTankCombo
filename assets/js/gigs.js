@@ -31,6 +31,13 @@ const GIGS = [
     city: "Palo Alto, CA",
     note: "Youth Community Service celebration at First Presbyterian Church",
     link: "ycs.html"
+  },
+  {
+    date: "2026-11-11",
+    venue: "Stevenson House",
+    city: "Palo Alto, CA",
+    note: "Veterans Day lunch at the Stevenson House senior community",
+    link: "stevenson-house.html"
   }
 ];
 
