@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testimonials &amp; Feedback — Tank!</title>
+<meta name="description" content="What people say about the high school jazz combo Tank!, and a form to send a testimonial or feedback.">
+<meta property="og:title" content="Testimonials &amp; Feedback — Tank!">
+<meta property="og:description" content="What people say about the jazz combo Tank!.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="../index.html">Tank<span>!</span></a>
+  <nav>
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#band">The Band</a>
+    <a href="../index.html#gigs">Previous Gigs</a>
+    <a href="../gigs/upcoming.html">Upcoming Gigs</a>
+    <a href="index.html" aria-current="page">Feedback</a>
+    <a href="../index.html#booking">Booking</a>
+  </nav>
+</header>
+
+<main class="gigs-page">
+
+  <div class="section-head">
+    <span class="rule"></span>
+    <h1>Testimonials &amp; Feedback</h1>
+  </div>
+
+  <div class="page-intro">
+    <p class="lead">What people have said after we played for them.</p>
+  </div>
+
+  <ul class="testimonial-list" id="testimonial-list"></ul>
+
+  <noscript>
+    <p class="gig-empty">This list needs JavaScript to load.</p>
+  </noscript>
+
+  <section class="testimonial-form-wrap" aria-labelledby="share-title">
+    <h2 id="share-title">Tell us what you think</h2>
+    <p class="testimonial-form-intro">Had us at your event, or caught us playing?
+    Send a testimonial we can post, or feedback that's just for the band.
+    We read every one.</p>
+
+    <form id="testimonial-form" class="testimonial-form"
+          action="https://formsubmit.co/thetankcombo@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New testimonial / feedback for Tank!">
+      <input type="hidden" name="_template" value="table">
+      <!-- honeypot: real people never see or fill this -->
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <fieldset class="choice">
+        <legend>What are you sending?</legend>
+        <label class="choice-opt">
+          <input type="radio" name="type" value="Testimonial" checked>
+          <span><strong>A testimonial</strong> we can post on this page</span>
+        </label>
+        <label class="choice-opt">
+          <input type="radio" name="type" value="Feedback">
+          <span><strong>Feedback</strong> just for the band, never posted</span>
+        </label>
+      </fieldset>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="t-name">Your name <span class="optional" data-for="feedback" hidden>(optional)</span></label>
+          <input id="t-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="t-email">Email <span class="optional">(optional, not posted)</span></label>
+          <input id="t-email" name="email" type="email" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="t-event">Event or role <span class="optional">(optional)</span></label>
+        <input id="t-event" name="event" type="text" placeholder="e.g. Organiser, Greenmeadow Memorial Day">
+      </div>
+
+      <div class="field">
+        <label for="t-message" id="t-message-label">Your testimonial</label>
+        <textarea id="t-message" name="message" rows="5" required maxlength="1500"></textarea>
+      </div>
+
+      <label class="check" data-for="testimonial">
+        <input type="checkbox" name="ok_to_post" value="Yes">
+        <span>OK to post this on the site with my name</span>
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Send</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </section>
+
+  <div class="gigs-cta">
+    <p>Want us at your next event?</p>
+    <a class="btn btn-primary" href="../index.html#booking">Book the band</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">Tank<span>!</span></p>
+  <div class="footer-contact">
+    <a href="mailto:thetankcombo@gmail.com">thetankcombo@gmail.com</a>
+  </div>
+</footer>
+
+<script src="../assets/js/testimonials.js"></script>
+<script>
+  renderTestimonials("testimonial-list");
+  wireTestimonialForm("testimonial-form");
+</script>
+
+</body>
+</html>

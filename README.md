@@ -26,6 +26,7 @@ files you see are the files that get served.
 ├── gigs/
 │   ├── index.html             the "previous gigs" list  (/gigs/)
 │   └── greenmeadow.html       a gig's photo gallery — the template for new gig pages
+├── testimonials/index.html    testimonials + testimonial/feedback form  (/testimonials/)
 ├── vercel.json                tells Vercel not to build (see Hosting)
 └── assets/
     ├── styles.css             all styling
@@ -36,6 +37,10 @@ files you see are the files that get served.
 
 **Adding a gig:** drop `gigs/<name>.html` (copy `greenmeadow.html`) and add an
 entry to `assets/js/gigs.js` — the home teaser and `/gigs/` list both update.
+**Testimonials & feedback** (`/testimonials/`): the form emails each testimonial or private feedback to
+thetankcombo@gmail.com through FormSubmit (the first one sends an activation
+email; click its link once). To publish one, copy it into
+`assets/js/testimonials.js`.
 **Adding a player:** add `players/<name>.html` and a card in `index.html`.
 
 `package.json` exists only for the optional local dev server (`npm run dev`).

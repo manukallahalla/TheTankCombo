@@ -338,6 +338,12 @@ There is no separate owner.
 
 ## Decision log
 
+- **Testimonials & feedback (2026-11-14).** New `/testimonials/` page
+  (`.gigs-page` pane): quote cards from `assets/js/testimonials.js` (same card
+  recipe as `.gig`) and a testimonial-or-feedback form posting to FormSubmit.
+  The home page gets a `.testimonials-teaser` pane after Booking, laid out like
+  Booking but with a ghost button so the primary stays on the booking ask.
+  Nav label is "Feedback"; the header nav wraps under 620px to fit six links.
 - **File layout (2026-09-08).** Assets moved to `assets/`; player bios to
   `players/`; the gig list and gig pages to `gigs/` (`gigs.html` → `gigs/index.html`,
   URL `/gigs/`). Sub-pages use `../` to reach the root. `gigs.js` gained a
